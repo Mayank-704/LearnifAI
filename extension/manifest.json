@@ -1,0 +1,36 @@
+{
+    "manifest_version": 3,
+    "name": "Text + Voice Extension",
+    "version": "1.0",
+    "permissions": [
+        "activeTab",
+        "scripting",
+        "storage",
+        "tabs",
+        "notifications"
+    ],
+    "host_permissions": [
+        "<all_urls>",
+        "https://*/*"
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": "icon.svg",
+        "default_title": "Click Me"
+    },
+    "description": "A Chrome extension that allows you to select text and read it aloud using the Web Speech API.",
+    "background": {
+        "service_worker": "background.js"
+    },
+    "icons": {
+        "16": "icon.svg",
+        "48": "icon.svg",
+        "128": "icon.svg"
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content.js"]
+        }
+    ]
+}

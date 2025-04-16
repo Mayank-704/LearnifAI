@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+    <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Microphone Icon -->
+        <rect x="26" y="16" width="12" height="24" rx="6" ry="6" />
+        <line x1="32" y1="40" x2="32" y2="48" />
+        <line x1="28" y1="48" x2="36" y2="48" />
+        <!-- Text Icon -->
+        <path d="M8 8h48v8H8zM8 24h32v8H8zM8 40h40v8H8z" />
+    </g>
+</svg>
