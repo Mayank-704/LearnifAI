@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LearnifAI</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 15px;
+      width: 300px;
+      background-color: #f4f4f4;
+    }
+    button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      color: white;
+    }
+    #select-btn { background-color: #007bff; margin-bottom: 8px; }
+    #listen-btn { background-color: #6f42c1; margin-bottom: 8px; }
+    #send-btn { background-color: #28a745; flex: 1; }
+    #cancel-btn { background-color: #dc3545; flex: 1; }
+    #preview {
+      background: #ffffff;
+      padding: 10px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    #result {
+      font-size: 14px;
+      margin-top: 10px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <h3>🧠 LearnifAI</h3>
+
+  <button id="select-btn">📋 Get Selected Text</button><br />
+  <button id="listen-btn">🎤 Listen to Voice</button>
+
+  <div id="preview">
+    <strong>Selected Text:</strong>
+    <div id="selected-text" style="margin-bottom: 10px;"></div>
+
+    <strong>Voice Command:</strong>
+    <div id="voice-text" style="margin-bottom: 10px;"></div>
+  </div>
+
+  <div style="display: flex; gap: 10px;">
+    <button id="send-btn">🚀 Send</button>
+    <button id="cancel-btn">❌ Cancel</button>
+  </div>
+
+  <div id="result">Status will appear here...</div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>
