@@ -1,5 +1,3 @@
-// popup.js
-
 let selectedText = '';
 let voiceText = '';
 
@@ -10,6 +8,7 @@ const cancelBtn = document.getElementById('cancel-btn');
 const selectedTextDiv = document.getElementById('selected-text');
 const voiceTextDiv = document.getElementById('voice-text');
 const resultBox = document.getElementById('result');
+const audioModeSelect = document.getElementById('audio-mode'); // New: <select id="audio-mode">
 
 // Get selected text from content script
 selectBtn.addEventListener('click', () => {
@@ -45,7 +44,34 @@ listenBtn.addEventListener('click', () => {
   });
 });
 
-// Send final data to Groq (mocked for now)
+// Handle TTS after response
+const handleSpeech = async (text, mode) => {
+  if (mode === 'browser') {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    speechSynthesis.speak(utterance);
+  } else if (mode === 'groq') {
+    try {
+      const response = await fetch('https://yourserver.com/api/tts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text }),
+      });
+
+      if (!response.ok) throw new Error('Groq TTS failed');
+
+      const audioBlob = await response.blob();
+      const url = URL.createObjectURL(audioBlob);
+      const audio = new Audio(url);
+      audio.play();
+    } catch (err) {
+      console.error('Groq TTS error:', err);
+      handleSpeech(text, 'browser'); // fallback
+    }
+  }
+};
+
+// Send final data to backend and play audio
 sendBtn.addEventListener('click', async () => {
   if (!selectedText || !voiceText) {
     resultBox.textContent = '⚠️ Please provide both selected text and voice input.';
@@ -56,15 +82,23 @@ sendBtn.addEventListener('click', async () => {
 
   try {
     const finalPrompt = `Explain this:\n"${selectedText}"\n\nWith instruction:\n"${voiceText}"`;
+    const mode = audioModeSelect.value;
 
-    // Simulate a Groq API response for now
-    setTimeout(() => {
-      resultBox.textContent = `✅ Response from Groq:\n"${finalPrompt}"`;
-    }, 1500);
+    const response = await fetch('https://yourserver.com/api/query', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: finalPrompt }),
+    });
 
-    // Later: Replace with actual fetch() call to Groq API here
+    const data = await response.json();
+    const responseText = data.text || data.message || 'No response';
+
+    resultBox.textContent = `✅ Response from Groq:\n"${responseText}"`;
+
+    handleSpeech(responseText, mode);
 
   } catch (err) {
+    console.error(err);
     resultBox.textContent = `❌ Error: ${err.message}`;
   }
 });
