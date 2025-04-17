@@ -45,7 +45,7 @@ function Home() {
                         <img
                             src={userDetails.photoURL}
                             alt="User Profile"
-                            className="rounded-full w-full h-full mx-auto mt-10"
+                            className="rounded-full w-24 h-24 mx-auto mt-10"
                         />
                         <h1 className="text-2xl mt-4">Welcome, {userDetails.displayName}!</h1>
                     </div>
