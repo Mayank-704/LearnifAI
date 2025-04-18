@@ -1,76 +1,81 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
 import { Navbar } from "../components/HistorySection/Navbar";
-import { SearchBar } from '../components/HistorySection/SearchBar';
-import { QuestionCard } from "../components/HistorySection/QuestionCard";
+import { SearchBar } from "../components/HistorySection/SearchBar";
 import { HistoryFilter } from "../components/HistorySection/HistoryFilter";
+import { QuestionCard } from "../components/HistorySection/QuestionCard";
 
 interface Question {
   id: number;
+  type: "code" | "text";
   question: string;
   askedAt: string;
-  answeredAt: string;
-  answer: string;
+  answeredAt?: string;
+  answer?: string;
   status: "answered" | "pending";
-  type: "code" | "text"; // Add this if you want filtering to work!
 }
 
-const History: React.FC = () => {
-  const [questions, setQuestions] = useState<Question[]>([]);
-  const [searchQuery, setSearchQuery] = useState<string>("");
+const sampleQuestions: Question[] = [
+  {
+    id: 1,
+    type: "code",
+    question: "How do I implement authentication in a React application?",
+    askedAt: "Apr 15, 2023 at 10:30 AM",
+    answeredAt: "Apr 15, 2023 at 2:45 PM",
+    answer: "You can use libraries like Firebase Authentication, Auth0, or implement your own using JWT tokens.",
+    status: "answered",
+  },
+  {
+    id: 2,
+    type: "text",
+    question: "What's the best way to manage global state in a large React application?",
+    askedAt: "Apr 17, 2023 at 9:15 AM",
+    answeredAt: "Apr 17, 2023 at 11:20 AM",
+    answer: "Consider using Redux, Redux Toolkit, or Zustand for simpler needs.",
+    status: "answered",
+  },
+  {
+    id: 3,
+    type: "code",
+    question: "How to optimize React performance for large lists?",
+    askedAt: "Apr 18, 2023 at 12:00 PM",
+    answer: "",
+    status: "pending",
+  },
+];
+
+const History = () => {
+  const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState<"all" | "code" | "text">("all");
 
-  useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const res = await axios.get<Question[]>("https://api.example.com/questions");
-        setQuestions(res.data);
-      } catch (error) {
-        console.error("Error fetching questions:", error);
-      }
-    };
-
-    fetchQuestions();
-  }, []);
-
-  // Filter based on searchQuery and filter
-  const filteredQuestions = questions.filter((q) => {
+  const filteredQuestions = sampleQuestions.filter((q) => {
     const matchesSearch = q.question.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesFilter = filter === "all" || q.type === filter;
     return matchesSearch && matchesFilter;
   });
 
   return (
-    <div>
+    <div className="min-h-screen bg-gray-50">
       <Navbar />
 
-      <div className="flex items-center justify-between mb-2 mt-2 gap-2 ml-auto px-6">
+      <div className="flex items-center justify-between px-6 mt-4">
+        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
         <HistoryFilter currentFilter={filter} setFilter={setFilter} />
       </div>
 
-      <div className="p-6">
-        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-      </div>
-      
       <div className="p-6 max-w-4xl mx-auto">
-        {filteredQuestions.length > 0 ? (
-          filteredQuestions.map((q) => (
-            <QuestionCard
-              key={q.id}
-              question={q.question}
-              askedAt={q.askedAt}
-              answeredAt={q.answeredAt}
-              answer={q.answer}
-              status={q.status}
-            />
-          ))
-        ) : (
-          <div className="text-center text-gray-500">No matching questions found.</div>
-        )}
+        {filteredQuestions.map((q) => (
+          <QuestionCard
+            key={q.id}
+            question={q.question}
+            askedAt={q.askedAt}
+            answeredAt={q.answeredAt || ""}
+            answer={q.answer || ""}
+            status={q.status}
+          />
+        ))}
       </div>
     </div>
   );
 };
 
 export default History;
-

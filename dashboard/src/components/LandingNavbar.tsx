@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const LandingNavbar: React.FC = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center p-4 shadow-md bg-white">
-      {/* Logo */}
+      {/* Logo and Title */}
       <div className="text-2xl font-bold text-blue-600">
         <Link to="/" className="hover:text-blue-800">
           LearnifAI

@@ -1,20 +1,27 @@
-// components/Navbar.tsx
-import React from "react";
-import { Plus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-export const Navbar: React.FC = () => {
+export const Navbar = () => {
+  const navigate = useNavigate();
+
   return (
-    <header className="w-full flex items-center justify-between px-6 py-4 border-b">
-      {/* Left: Title + Beta tag */}
-      <div className="flex items-center gap-2">
-        <h1 className="text-xl font-bold">History</h1>
-        
+      <header className="top-0 left-0 right-0 z-50 flex justify-between items-center p-4 shadow-md bg-white">
+
+      <div
+        className="flex items-center gap-2 cursor-pointer"
+        onClick={() => navigate("/")} 
+      >
+        <h1 className="text-2xl font-bold text-blue-600 hover:text-blue-800">LearnifAI</h1>
       </div>
 
-      {/* Right: + New Question */}
-      <button className="flex items-center gap-1 text-purple-600 font-medium hover:underline">
-        <Plus className="w-4 h-4" />
-        New Question
+      <h1 className="text-2xl font-bold text-gray-800">
+        History
+      </h1>
+
+      <button
+        onClick={() => navigate(-1)}
+        className="text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg transition"
+      >
+        + New Question
       </button>
     </header>
   );

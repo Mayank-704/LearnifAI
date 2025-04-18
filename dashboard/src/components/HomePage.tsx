@@ -41,7 +41,7 @@ const HomePage: React.FC = () => {
 
             <Button className="flex items-center gap-2 border-gray-300">
               <Info className="h-5 w-5" />
-              <Link to="#learn-more" className="text-current">
+              <Link to="/features" className="text-current">
                 Learn More
               </Link>
             </Button>
@@ -58,7 +58,7 @@ const HomePage: React.FC = () => {
           </div>
         </div>
 
-        <div className="relative">
+        <div className="relative ">
           <div className="bg-white rounded-lg shadow-xl p-6 max-w-md mx-auto">
             <div className="flex gap-2 mb-4">
               <div className="w-3 h-3 rounded-full bg-red-500"></div>
@@ -76,10 +76,10 @@ const HomePage: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 text-blue-500"
+                  className="h-5 w-5 text-blue-500 hover:text-blue-700"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
