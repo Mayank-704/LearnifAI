@@ -1,67 +1,49 @@
-import  { useEffect, useState } from 'react';
-import { auth } from '../components/firebase';
+import { useEffect, useState } from "react";
+import { auth } from "../components/firebase";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
-    const [userDetails, setUserDetails] = useState(null);
+  const [user, setUser] = useState<any>(null);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((user) => {
-            if (user) {
-                console.log(user);
-                setUserDetails(user);
-            } else {
-                setUserDetails(null);
-            }
-        });
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
 
-        return () => unsubscribe(); // Cleanup listener on unmount
-    }, []);
+  const handleLogout = async () => {
+    await signOut(auth);
+    navigate("/login");
+  };
 
-    const handleLogout = async () => {
-        try {
-            await auth.signOut();
-            console.log("User logged out successfully!");
-            window.location.href = "/login";
-        } catch (error) {
-            console.error("Error logging out:", error.message);
-        }
-    };
-
+  if (!user) {
     return (
-        <div className='h-screen bg-gradient-to-r from-[#1A1A1D] to-[#2D2D30] text-white'>
-
-            {userDetails ? (
-                <>
-
-                    <div className='flex justify-end mr-10'>
-                        <button
-                            onClick={handleLogout}
-                            className="w-30 bg-blue-600 mt-10 hover:bg-blue-700 transition-colors py-2 px-4 rounded-md text-white font-medium"
-                        >
-                            Logout
-                        </button>
-                    </div>
-                    <div className="text-center">
-                        <img
-                            src={userDetails.photoURL}
-                            alt="User Profile"
-                            className="rounded-full w-full h-full mx-auto mt-10"
-                        />
-                        <h1 className="text-2xl mt-4">Welcome, {userDetails.displayName}!</h1>
-                    </div>
-
-                    
-                </>
-            ) : (
-                <div className='flex justify-center'>
-                    <button className="mt-40 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition duration-200">
-                        <a href="/signup" className="text-sky-50/100 ml-2">Get Started</a>
-                    </button>
-                </div>
-            )}
-
-        </div>
+      <div className="flex justify-center items-center min-h-screen">
+        <a href="/login" className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md">Login</a>
+      </div>
     );
+  }
+
+  return (
+    <div className="h-screen flex flex-col justify-center items-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white">
+      <img
+        src={user.photoURL || ""}
+        alt="Profile"
+        className="w-24 h-24 rounded-full mb-4"
+      />
+      <h1 className="text-2xl font-bold mb-4">Welcome, {user.displayName || user.email}!</h1>
+
+      <button
+        onClick={handleLogout}
+        className="bg-red-500 hover:bg-red-600 py-2 px-6 rounded-md"
+      >
+        Logout
+      </button>
+    </div>
+  );
 }
 
 export default Home;

@@ -10,7 +10,7 @@ interface QuestionCardProps {
 
 export const QuestionCard: React.FC<QuestionCardProps> = ({ question, askedAt, answeredAt, answer, status }) => {
   return (
-    <div className="bg-white p-6 rounded-xl shadow border mb-6">
+    <div className="bg-white p-6 rounded-xl shadow border mb-6 hover:shadow-lg">
       <div className="flex items-start justify-between">
         <h2 className="text-xl font-semibold">{question}</h2>
         {status === "answered" ? (
