@@ -46,10 +46,29 @@
         margin-top: 10px;
         white-space: pre-wrap;
       }
+      input {
+        width: 100%;
+        padding: 6px;
+        margin-bottom: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      #login-section {
+        margin-bottom: 15px;
+      }
+      #login-btn {
+        background-color: #343a40;
+      }
     </style>
   </head>
   <body>
     <h3>🧠 LearnifAI</h3>
+
+    <div id="login-section">
+      <input type="email" id="email" placeholder="Email" />
+      <input type="password" id="password" placeholder="Password" />
+      <button id="login-btn">🔐 Login</button>
+    </div>
 
     <button id="select-btn">📋 Get Selected Text</button><br />
     <button id="listen-btn">🎤 Listen to Voice</button>

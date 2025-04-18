@@ -7,7 +7,8 @@ import cors from 'cors';
 
 //import routes
 import groqRoutes from './routes/groq.route.js';
-
+import authRoutes from './routes/auth.route.js'
+import historyRoutes from './routes/history.routes.js'
 
 // Load environment variables
 dotenv.config();
@@ -22,14 +23,8 @@ app.use(cors());
 connectDB();
 
 app.use('/api/groq', groqRoutes);
-
-//protected routes
-// app.get('/secure-data', verifyToken, (req, res) => {
-//   res.json({
-//     message: 'This is protected backend data ✅',
-//     uid: req.uid, // from verified token
-//   });
-// });
+app.use('/api/auth', authRoutes);
+app.use('/api/history', historyRoutes);
 
 // Sample route
 app.get('/', (req, res) => {

@@ -8,7 +8,44 @@ const cancelBtn = document.getElementById('cancel-btn');
 const selectedTextDiv = document.getElementById('selected-text');
 const voiceTextDiv = document.getElementById('voice-text');
 const resultBox = document.getElementById('result');
-const audioModeSelect = document.getElementById('audio-mode'); // New: <select id="audio-mode">
+const audioModeSelect = document.getElementById('audio-mode');
+
+// Login elements
+const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
+const loginBtn = document.getElementById('login-btn');
+
+// 🔐 LOGIN HANDLER
+loginBtn.addEventListener('click', async () => {
+  const email = emailInput.value.trim();
+  const password = passwordInput.value.trim();
+
+  if (!email || !password) {
+    resultBox.textContent = '⚠️ Email and password required!';
+    return;
+  }
+
+  resultBox.textContent = '🔐 Logging in...';
+
+  try {
+    const response = await fetch('https://yourserver.com/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) throw new Error(data.message || 'Login failed');
+
+    // Save token
+    await chrome.storage.local.set({ token: data.token });
+    resultBox.textContent = '✅ Logged in successfully!';
+  } catch (err) {
+    console.error('Login error:', err);
+    resultBox.textContent = `❌ Login failed: ${err.message}`;
+  }
+});
 
 // Get selected text from content script
 selectBtn.addEventListener('click', () => {
@@ -52,9 +89,13 @@ const handleSpeech = async (text, mode) => {
     speechSynthesis.speak(utterance);
   } else if (mode === 'groq') {
     try {
+      const { token } = await chrome.storage.local.get(['token']);
       const response = await fetch('https://yourserver.com/api/tts', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({ text }),
       });
 
@@ -84,9 +125,14 @@ sendBtn.addEventListener('click', async () => {
     const finalPrompt = `Explain this:\n"${selectedText}"\n\nWith instruction:\n"${voiceText}"`;
     const mode = audioModeSelect.value;
 
+    const { token } = await chrome.storage.local.get(['token']);
+
     const response = await fetch('https://yourserver.com/api/query', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({ query: finalPrompt }),
     });
 
@@ -94,7 +140,6 @@ sendBtn.addEventListener('click', async () => {
     const responseText = data.text || data.message || 'No response';
 
     resultBox.textContent = `✅ Response from Groq:\n"${responseText}"`;
-
     handleSpeech(responseText, mode);
 
   } catch (err) {

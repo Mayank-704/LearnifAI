@@ -1,50 +1,21 @@
-
 import mongoose from 'mongoose';
 
-const userSchema = new mongoose.Schema({
-  uid: {
-    type: String,
-    required: true,
-    unique: true, // Firebase UID
-  },
-  name: {
-    type: String,
-    required: false,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  preferences: {
-    theme: {
+const userSchema = new mongoose.Schema(
+  {
+    email: {
       type: String,
-      enum: ['light', 'dark'],
-      default: 'light',
+      required: true,
+      unique: true,
+      trim: true,
     },
-    voiceAssistant: {
-      type: Boolean,
-      default: true,
-    },
-    language: {
+    password: {
       type: String,
-      default: 'en',
-    }
-  },
-  usageStats: {
-    totalQueries: {
-      type: Number,
-      default: 0,
+      required: true,
     },
-    lastUsed: {
-      type: Date,
-    }
-  }
-});
+  },
+  { timestamps: true }
+);
 
 const User = mongoose.model('User', userSchema);
+
 export default User;
