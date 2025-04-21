@@ -84,21 +84,22 @@ sendBtn.addEventListener('click', async () => {
     const finalPrompt = `Explain this:\n"${selectedText}"\n\nWith instruction:\n"${voiceText}"`;
     const mode = audioModeSelect.value;
 
-    const response = await fetch('https://yourserver.com/api/query', {
+    const response = await fetch('http://localhost:3051/api/groq/ask', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: finalPrompt }),
     });
 
     const data = await response.json();
-    const responseText = data.text || data.message || 'No response';
+    console.log(data);
+    const responseText = data.response || data.text || data.message || 'No response';
 
     resultBox.textContent = `✅ Response from Groq:\n"${responseText}"`;
 
     handleSpeech(responseText, mode);
 
   } catch (err) {
-    console.error(err);
+        console.log("Error while sending",err)
     resultBox.textContent = `❌ Error: ${err.message}`;
   }
 });

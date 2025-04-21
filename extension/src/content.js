@@ -1,23 +1,16 @@
 // content.js
 
-// Listener for messages from popup or background
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.action === 'GET_SELECTED_TEXT') {
-      const selectedText = window.getSelection().toString().trim();
-  
-      // Respond with the selected text or a fallback message
-      sendResponse({
-        text: selectedText || 'No text selected.',
-      });
-  
-      // Return true to indicate we're sending an async response
-      return true;
-    }
-  });
+  if (request.action === 'GET_SELECTED_TEXT') {
+    const selectedText = window.getSelection().toString().trim();
 
-  // content.js (extend this)
+    sendResponse({
+      text: selectedText || 'No text selected.',
+    });
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    return true; // Let Chrome know we might respond asynchronously
+  }
+
   if (request.action === 'START_VOICE') {
     const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
     recognition.lang = 'en-US';
@@ -35,9 +28,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
     recognition.start();
 
-    // Allow async sendResponse
-    return true;
+    return true; // Required to keep sendResponse usable asynchronously
   }
 });
-
-  
