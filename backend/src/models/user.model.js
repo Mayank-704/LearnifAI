@@ -1,48 +1,27 @@
-
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
-  uid: {
+  googleId: {
     type: String,
     required: true,
-    unique: true, // Firebase UID
-  },
-  name: {
-    type: String,
-    required: false,
+    unique: true, // Google ID
   },
   email: {
     type: String,
     required: true,
     unique: true,
   },
+  firstName: {
+    type: String,
+    required: true,
+  },
+  profilePicUrl: {
+    type: String,
+    required: false,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
-  },
-  preferences: {
-    theme: {
-      type: String,
-      enum: ['light', 'dark'],
-      default: 'light',
-    },
-    voiceAssistant: {
-      type: Boolean,
-      default: true,
-    },
-    language: {
-      type: String,
-      default: 'en',
-    }
-  },
-  usageStats: {
-    totalQueries: {
-      type: Number,
-      default: 0,
-    },
-    lastUsed: {
-      type: Date,
-    }
   }
 });
 
