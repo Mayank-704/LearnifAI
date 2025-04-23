@@ -1,95 +1,163 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import React, { useState } from "react";
-import { auth } from "../components/firebase";
-import SignInwithGoogle from "../components/SignInwithGoogle";
+import { useState } from "react";
+import {useAuthStore} from "../store/useAuthStore"
+import {toast} from "react-hot-toast";
+import { NavLink } from "react-router-dom";
 
-const SignUpPage: React.FC = () => {
-  const [showPassword, setShowPassword] = useState<boolean>(false);
+function SignupPage() {
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+  });
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    try {
-      await createUserWithEmailAndPassword(auth, e.target.email.value, e.target.password.value);
-      const user = auth.currentUser;
-      console.log("User Registered Successfully!");
-      console.log(user);
-    } catch (error) {
-      console.log(error.message);
+  const { signup, isSigningUp } = useAuthStore();
+
+  const validateForm = () => {
+    if (!formData.fullName) {
+      toast.error("FullName is required");
+      return false;
     }
+    if (!formData.email) {
+      toast.error("Email is required");
+      return false;
+    }
+    if (!formData.password) {
+      toast.error("Password is required");
+      return false;
+    }
+    if (formData.password.length < 6) {
+      toast.error("Password must be at least 6 characters");
+      return false;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (formData.email && !emailRegex.test(formData.email)) {
+      toast.error("Invalid email format");
+      return false;
+    }
+    return true;
   };
 
+  interface FormData {
+    fullName: string;
+    email: string;
+    password: string;
+  }
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+   try{
+    e.preventDefault();
+    const isValid = validateForm();
+    if (isValid) {
+      signup(formData as FormData);
+      window.location.href = '/'
+   }
+    }catch(err){
+      console.log(err)
+      toast.error("Signup failed")
+    }
+  };
   return (
-    <div className="bg-[#F9FAFB] min-h-screen flex items-center justify-center">
-      <div className="bg-white p-8 rounded-4xl shadow-xl w-full max-w-sm text-[#1F2937]">
-        <div className="flex justify-center mb-4">
-          <div className="w-16 h-16 bg-[#6B7280] text-white flex items-center justify-center rounded-md font-semibold text-sm">Logo</div>
-        </div>
-
-        <h2 className="text-center text-xl font-semibold mb-6">Sign Up</h2>
-
-        <SignInwithGoogle />
-
-        <form onSubmit={handleRegister} className="space-y-5">
-          
-          <div>
-            <label htmlFor="email" className="text-sm block mb-1">E-Mail</label>
-            <input
-              type="email"
-              id="email"
-        
-              className="w-full px-4 py-2 rounded-md bg-white text-[#1F2937] border border-[#6B7280] focus:outline-none focus:ring-2 focus:ring-[#3B82F6]"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="password" className="text-sm block mb-1">Password</label>
-            <div className="relative">
+    <div>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+        <div className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow-md">
+          <h2 className="text-2xl font-bold text-center">Sign Up</h2>
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Full Name
+              </label>
               <input
-                type={showPassword ? "text" : "password"}
-                id="password"
-                
-                className="w-full px-4 py-2 pr-10 rounded-md bg-white text-[#1F2937] border border-[#6B7280] focus:outline-none focus:ring-2 focus:ring-[#3B82F6]"
+                type="text"
+                className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
+                value={formData.fullName}
+                onChange={(e) => {
+                  setFormData({ ...formData, fullName: e.target.value });
+                }}
               />
-              <span
-                className="absolute right-3 top-2.5 text-gray-400 cursor-pointer"
-                onClick={() => setShowPassword((prev) => !prev)}
-              >
-                {showPassword ? (
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                      d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a10.05 10.05 0 012.107-3.592M6.282 6.282A10.012 10.012 0 0112 5c4.478 0 8.268 2.943 9.542 7a10.01 10.01 0 01-4.032 5.148M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3l18 18" />
-                  </svg>
-                ) : (
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                  </svg>
-                )}
-              </span>
             </div>
-          </div>
-          <div className="flex item-center justify-center">
-          <button
-            type="submit"
-            className="w-50 mt-3 bg-[#10B981] hover:bg-green-700 text-white py-2 rounded-md transition duration-200"
-          >
-            Sign Up
-          </button>
-          </div>
-         
-
-          
-
-          <p className="text-center text-sm text-[#1F2937]">
-            Already have an account? <a href="/login" className="text-[#3B82F6] hover:underline">Login</a>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Email
+              </label>
+              <input
+                type="email"
+                className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
+                value={formData.email}
+                onChange={(e) => {
+                  setFormData({ ...formData, email: e.target.value });
+                }}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
+                  value={formData.password}
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
+                />
+                <span
+                  className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                  onClick={() => {
+                    setShowPassword((prev) => !prev);
+                  }}
+                >
+                  {showPassword ? "🙈" : "👁️"}
+                </span>
+              </div>
+            </div>
+            <button
+              type="submit"
+              disabled={isSigningUp}
+              className="w-full px-4 py-2 font-bold text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-200"
+            >
+              {isSigningUp ? (
+                <>
+                  <div className="loader"></div>
+                  Loading...
+                </>
+              ) : (
+                "Sign Up"
+              )}
+            </button>
+          </form>
+          <p className="text-sm text-center text-gray-600">
+            Already have an account?{" "}
+            <NavLink to="/login" className="text-indigo-600 hover:underline">
+              Log In
+            </NavLink>
           </p>
-        </form>
+        </div>
       </div>
+      {/* <style jsx>{`
+        .loader {
+          border: 4px solid rgba(255, 255, 255, 0.3);
+          border-radius: 50%;
+          border-top: 4px solid white;
+          width: 20px;
+          height: 20px;
+          animation: spin 1s linear infinite;
+          display: inline-block;
+          margin-right: 8px;
+        }
+
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+      `}</style> */}
     </div>
   );
-};
+}
 
-export default SignUpPage;
+export default SignupPage;
