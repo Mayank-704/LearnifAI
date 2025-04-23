@@ -43,13 +43,15 @@ export const useAuthStore = create<AuthStore>((set) => ({
       set({authUser: res.data});
       localStorage.setItem("authUser",JSON.stringify(res.data));
       localStorage.setItem("authUser", JSON.stringify(res.data)); // Save auth state locally
-
+      toast.success("Signup succesfully")
     } catch (error) {
-      if (error instanceof AxiosError && error.response) {
-        toast.error(error.response.data.message || "Signup failed");
-        console.log(" sign up -1");
-        console.log(error.response.data.message);
-      }
+      // if (error instanceof AxiosError && error.response) {
+      //   toast.error(error.response.data.message || "Signup failed");
+      //   console.log(" sign up -1");
+      //   console.log(error.response.data.message);
+      // }
+      console.log(error)
+      toast.error("Signup failed")
     }finally{
       set({isSigningUp: false})
     }

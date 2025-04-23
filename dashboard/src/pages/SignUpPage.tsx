@@ -45,11 +45,16 @@ function SignupPage() {
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+   try{
     e.preventDefault();
     const isValid = validateForm();
     if (isValid) {
       signup(formData as FormData);
       window.location.href = '/'
+   }
+    }catch(err){
+      console.log(err)
+      toast.error("Signup failed")
     }
   };
   return (
