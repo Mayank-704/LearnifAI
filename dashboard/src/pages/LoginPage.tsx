@@ -1,74 +1,183 @@
 import React, { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
-import SignInwithGoogle from "../components/SignInwithGoogle";
+import toast from "react-hot-toast";
+import { useAuthStore } from "../store/useAuthStore";
+import { NavLink } from "react-router-dom";
 
-const LoginPage: React.FC = () => {
-  const [showPassword, setShowPassword] = useState<boolean>(false);
+
+interface LoginForm {
+  email: string;
+  password: string;
+}
+
+
+function LoginPage() {
+    const [showPassword, setPassword] = useState(false);
+  
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState<LoginForm>({
+    email: "",
+    password: "",
+  });
+  // const [UserData, setUserData] = useState({
+  //   email: "",
+  //   password: "",
+  // });
+
+
+
+  const { login, isLoggingIn } = useAuthStore();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // validation function 
+  const validateForm = (data: LoginForm): boolean => {
+    console.log("vcheck 0");
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    if (!data.email || !data.password) {
+    console.log("vcheck 1");
+
+      toast.error("Please fill in all fields");
+      return false;
+    }
+
+    if (!emailRegex.test(data.email)) {
+    console.log("vcheck 2");
+
+      toast.error("Please enter a valid email");
+      return false;
+    }
+
+    if (!passwordRegex.test(data.password)) {
+    console.log("vcheck 3");
+
+      toast.error(
+        "Password must be at least 8 characters long and include at least one letter, one number, and one special character"
+      );
+      return false;
+    }
+
+    return true;
+  };
+
+  //handel submit 
+  const handleSubmit = async (e: React.FormEvent) => {
+    console.log("check 0");
+    e.preventDefault();
+
+    if (isLoggingIn || loading) return;
+    console.log("check 1");
+
+
+    if (!validateForm(formData)) return;
+    console.log("check 2");
+
+    setLoading(true);
+    try {
+    console.log("check 3");
+    console.log("Sending Data:", JSON.stringify(formData, null, 2));
+
+      await login(formData);
+    console.log("check 1");
+    window.location.href = "/"
+    } catch (error) {
+    console.log("check 4");
+
+      console.error("Login error:", error);
+      toast.error("Invalid email or password. Please try again.");
+    } finally {
+    console.log("check 5");
+
+      setLoading(false);
+    }
+  };
+
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   console.log("Form Submitted:", UserData);
+  // };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F9FAFB]">
-      <div className="bg-white p-8 rounded-4xl shadow-xl w-full max-w-sm">
-        <div className="flex justify-center mb-4">
-          <div className="w-14 h-14 bg-gray-300 rounded-md flex items-center justify-center text-sm font-medium text-[#1F2937]">Logo</div>
-        </div>
+    <div className="relative h-auto md:h-[90vh] w-full flex justify-center items-center p-6 overflow-hidden">
 
-        <h2 className="text-center text-[#1F2937] text-xl font-semibold mb-6">
-          Login Your Account
-        </h2>
+     
 
-        <SignInwithGoogle />
+      {/* Form Container */}
+      <div className="relative z-10 bg-transparent p-6 rounded-lg shadow-lg max-w-lg w-[100vb] text-white">
+        <h2 className="text-2xl font-sephora mb-4">Login </h2>
 
-        <form className="space-y-4">
-          <div>
-            <label className="block mb-1 text-sm text-[#1F2937]">E-Mail</label>
+        <form onSubmit={handleSubmit}>
+          {/* Email */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium">Email Address</label>
             <input
               type="email"
-              className="w-full px-3 py-2 rounded-lg border border-[#6B7280] text-sm focus:outline-none focus:ring-2 focus:ring-[#3B82F6]"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               required
+              className="w-full px-3 py-2 mt-1 bg-gray-700 border border-gray-600 rounded-md focus:ring-4 focus:ring-[#9747FF] focus:ring-offset-2"
+              placeholder="Enter your email"
             />
           </div>
-          <div>
-            <label className="block mb-1 text-sm text-[#1F2937]">Password</label>
+
+          {/* Password */}
+          <div className="form-control">
+            <label className="label block text-sm font-medium">
+              Password *
+            </label>
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
-                className="w-full px-3 py-2 rounded-lg border border-[#6B7280] text-sm focus:outline-none focus:ring-2 focus:ring-[#3B82F6]"
-                required
+                className="w-full px-3 py-2 mt-1 bg-gray-700 border border-gray-600 rounded-md focus:ring-4 focus:ring-[#9747FF] focus:ring-offset-2"
+                placeholder="••••••••"
+                value={formData.password}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
               />
-              <span
-                onClick={() => setShowPassword((prev) => !prev)}
-                className="absolute right-3 top-2.5 text-gray-500 cursor-pointer"
+              <button
+                type="button"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-black"
+                onClick={() => setPassword(!showPassword)}
               >
-                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-              </span>
+                {showPassword ? "🙈" : "👁️"}
+              </button>
             </div>
-            
           </div>
-          <div className="flex item-center justify-center">
-          <button
-            type="submit"
-            className=" w-50 mt-2 bg-[#10B981] hover:bg-[#0f9a74] transition-colors py-2 rounded-xl text-[#F9FAFB] font-medium"
-          >
-            Login
-          </button>
-          </div>
-          
-        </form>
-        <div className="text-center mt-2">
-              <a href="#" className="text-sm text-[#3B82F6] hover:underline">
-                Forgot Password?
-              </a>
-            </div>
 
-        <div className="text-center mt-3 text-sm text-[#1F2937]">
-          Don’t Have An Account?{" "}
-          <a href="/signup" className="text-[#3B82F6] hover:underline">
-            Sign Up
-          </a>
-        </div>
+          {/* Submit Button */}
+          <div className="flex justify-center m-6">
+            <div className="relative p-[2px] w-[150px] sm:w-[200px] flex justify-center bg-gradient-to-r from-[#9747FF] via-[#DBC1FD] to-[#9C1466]">
+                <button
+                type="submit"
+                className="relative p-6 w-[195px] text-white bg-black text-lg rounded-none"
+                >
+                Submit
+                </button>
+            </div>
+          </div>
+
+          <div className="pt-4 flex justify-center">
+            <div>
+                <NavLink to="/register">Sign up</NavLink>{" "}
+              instead?
+            </div>
+          </div>
+
+          {/* <div className="pt-4 flex justify-center">
+            <div>
+            Forgot your password?
+                <NavLink to="/passwordReset">Reset Now</NavLink>{" "}
+            </div>
+          </div> */}
+        </form>
       </div>
     </div>
   );
-};
+}
 
 export default LoginPage;

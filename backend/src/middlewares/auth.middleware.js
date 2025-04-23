@@ -1,26 +1,33 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
+import User from "../models/user.model.js";
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
-
-// Middleware to protect routes and verify JWT
-const protect = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1];  // Get token from Bearer header
-
-  if (!token) {
-    return res.status(401).json({ message: 'No token provided' });
-  }
-
+const protectRoute = async (req, res, next) => {
   try {
-    // Verify the token
-    const decoded = jwt.verify(token, JWT_SECRET);
-    
-    // Attach user ID to the request object
-    req.user = { id: decoded.uid };
+    const token = req.cookies.jwt;
 
-    next();  // Continue to the next middleware or route handler
-  } catch (err) {
-    res.status(401).json({ message: 'Invalid or expired token' });
+    if (!token) {
+      return res.status(401).json({ message: "Unauthorized - No Token Provided" });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    if (!decoded) {
+      return res.status(401).json({ message: "Unauthorized - Invalid Token" });
+    }
+
+    const user = await User.findById(decoded.userId).select("-password");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    req.user = user;
+
+    next();
+  } catch (error) {
+    console.log("Error in protectRoute middleware: ", error.message);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
-export default protect;
+export default protectRoute
