@@ -1,8 +1,15 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink} from 'react-router-dom';
 import { Mic } from "lucide-react";
 
 
-const LandingNavbar: React.FC = () => {
+const Navbar: React.FC = () => {
+  const handleScrollToFeatures = () => {
+    const el = document.getElementById("features");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+  
   return (
     <header className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center p-2 shadow-md bg-white">
 
@@ -20,12 +27,22 @@ const LandingNavbar: React.FC = () => {
 
 
       <nav className="flex items-center space-x-6 gap-4">
-        <Link to="/features" className="text-gray-700 hover:text-blue-500">
+        <button
+          onClick={handleScrollToFeatures}
+          className="text-gray-700 hover:text-blue-500"
+        >
           Features
-        </Link>
-        <Link to="/history" className="text-gray-700 hover:text-blue-500">
-          Dashboard
-        </Link>
+        </button>
+        <NavLink
+          to="/history"
+          className={({ isActive }) =>
+            isActive
+              ? "text-blue-500 font-bold underline"
+              : "text-gray-700 hover:text-blue-500"
+          }
+        >
+          History
+        </NavLink>
         <a
           href="https://www.youtube.com/"
           target="_blank"
@@ -62,4 +79,4 @@ const LandingNavbar: React.FC = () => {
   );
 };
 
-export default LandingNavbar;
+export default Navbar;
