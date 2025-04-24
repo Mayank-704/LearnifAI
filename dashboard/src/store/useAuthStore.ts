@@ -42,7 +42,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
       Cookies.set("token", res.data.token!, { expires: 10, secure: true });
       set({authUser: res.data});
       localStorage.setItem("authUser",JSON.stringify(res.data));
-      localStorage.setItem("authUser", JSON.stringify(res.data)); // Save auth state locally
+      // localStorage.setItem("authUser", JSON.stringify(res.data)); // Save auth state locally
       toast.success("Signup succesfully")
     } catch (error) {
       // if (error instanceof AxiosError && error.response) {

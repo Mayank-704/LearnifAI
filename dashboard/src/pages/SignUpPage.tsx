@@ -1,7 +1,7 @@
 import { useState } from "react";
-import {useAuthStore} from "../store/useAuthStore"
-import {toast} from "react-hot-toast";
-import { NavLink } from "react-router-dom";
+import { useAuthStore } from "../store/useAuthStore.ts";
+import { toast } from "react-hot-toast";
+import { NavLink, useNavigate } from "react-router-dom";
 
 function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -11,11 +11,13 @@ function SignupPage() {
     password: "",
   });
 
-  const { signup, isSigningUp } = useAuthStore();
+  const signup = useAuthStore((state) => state.signup);
+  const isSigningUp = useAuthStore((state) => state.isSigningUp);
+  const navigate = useNavigate(); // Use React Router's navigate for redirection
 
   const validateForm = () => {
     if (!formData.fullName) {
-      toast.error("FullName is required");
+      toast.error("Full Name is required");
       return false;
     }
     if (!formData.email) {
@@ -31,79 +33,80 @@ function SignupPage() {
       return false;
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (formData.email && !emailRegex.test(formData.email)) {
+    if (!emailRegex.test(formData.email)) {
       toast.error("Invalid email format");
       return false;
     }
     return true;
   };
 
-  interface FormData {
-    fullName: string;
-    email: string;
-    password: string;
-  }
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-   try{
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const isValid = validateForm();
-    if (isValid) {
-      signup(formData as FormData);
-      window.location.href = '/'
-   }
-    }catch(err){
-      console.log(err)
-      toast.error("Signup failed")
+
+    if (!validateForm()) return;
+
+    try {
+      await signup(formData); // Await the signup function
+      toast.success("Signup successful!");
+      navigate("/"); // Redirect to the home page after successful signup
+    } catch (err) {
+      console.error("Signup error:", err);
+      toast.error("Signup failed. Please try again.");
     }
   };
+
   return (
-    <div>
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-        <div className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow-md">
-          <h2 className="text-2xl font-bold text-center">Sign Up</h2>
+    <div className="dark">
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900">
+        <div className="w-full max-w-md p-8 space-y-6 bg-gray-800 rounded shadow-md">
+          <h2 className="text-2xl font-bold text-center text-white">Sign Up</h2>
           <form className="space-y-4" onSubmit={handleSubmit}>
+            {/* Full Name */}
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-300">
                 Full Name
               </label>
               <input
                 type="text"
-                className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
+                className="w-full px-3 py-2 mt-1 border rounded-md bg-gray-700 text-gray-200 border-gray-600 focus:outline-none focus:ring focus:ring-indigo-500"
                 value={formData.fullName}
                 onChange={(e) => {
                   setFormData({ ...formData, fullName: e.target.value });
                 }}
               />
             </div>
+
+            {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-300">
                 Email
               </label>
               <input
                 type="email"
-                className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
+                className="w-full px-3 py-2 mt-1 border rounded-md bg-gray-700 text-gray-200 border-gray-600 focus:outline-none focus:ring focus:ring-indigo-500"
                 value={formData.email}
                 onChange={(e) => {
                   setFormData({ ...formData, email: e.target.value });
                 }}
               />
             </div>
+
+            {/* Password */}
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-gray-300">
                 Password
               </label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
-                  className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
+                  className="w-full px-3 py-2 mt-1 border rounded-md bg-gray-700 text-gray-200 border-gray-600 focus:outline-none focus:ring focus:ring-indigo-500"
                   value={formData.password}
                   onChange={(e) =>
                     setFormData({ ...formData, password: e.target.value })
                   }
                 />
                 <span
-                  className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                  className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-gray-300"
                   onClick={() => {
                     setShowPassword((prev) => !prev);
                   }}
@@ -112,50 +115,26 @@ function SignupPage() {
                 </span>
               </div>
             </div>
+
+            {/* Submit Button */}
             <button
               type="submit"
               disabled={isSigningUp}
-              className="w-full px-4 py-2 font-bold text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-200"
+              className="w-full px-4 py-2 font-bold text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-500"
             >
-              {isSigningUp ? (
-                <>
-                  <div className="loader"></div>
-                  Loading...
-                </>
-              ) : (
-                "Sign Up"
-              )}
+              {isSigningUp ? "Signing Up..." : "Sign Up"}
             </button>
           </form>
-          <p className="text-sm text-center text-gray-600">
+
+          {/* Login Link */}
+          <p className="text-sm text-center text-gray-400">
             Already have an account?{" "}
-            <NavLink to="/login" className="text-indigo-600 hover:underline">
+            <NavLink to="/login" className="text-indigo-400 hover:underline">
               Log In
             </NavLink>
           </p>
         </div>
       </div>
-      {/* <style jsx>{`
-        .loader {
-          border: 4px solid rgba(255, 255, 255, 0.3);
-          border-radius: 50%;
-          border-top: 4px solid white;
-          width: 20px;
-          height: 20px;
-          animation: spin 1s linear infinite;
-          display: inline-block;
-          margin-right: 8px;
-        }
-
-        @keyframes spin {
-          0% {
-            transform: rotate(0deg);
-          }
-          100% {
-            transform: rotate(360deg);
-          }
-        }
-      `}</style> */}
     </div>
   );
 }
