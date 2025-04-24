@@ -9,7 +9,26 @@
         font-family: Arial, sans-serif;
         padding: 15px;
         width: 300px;
-        background-color: #f4f4f4;
+        background-color: #121212;
+        color: #e0e0e0;
+      }
+      a.website-link {
+        display: block;
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+        color: #1e90ff;
+        text-decoration: none;
+        margin-bottom: 10px;
+      }
+      a.website-link:hover {
+        text-decoration: underline;
+      }
+      .description {
+        text-align: center;
+        font-size: 12px;
+        color: #b0b0b0;
+        margin-bottom: 15px;
       }
       button {
         padding: 8px 12px;
@@ -19,7 +38,7 @@
         color: white;
       }
       #select-btn {
-        background-color: #007bff;
+        background-color: #1e90ff;
         margin-bottom: 8px;
       }
       #listen-btn {
@@ -35,20 +54,31 @@
         flex: 1;
       }
       #preview {
-        background: #ffffff;
+        background: #1e1e1e;
         padding: 10px;
         border-radius: 6px;
         margin-bottom: 12px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
       }
       #result {
         font-size: 14px;
         margin-top: 10px;
         white-space: pre-wrap;
+        color: #b0b0b0;
+      }
+      #audio-mode {
+        margin-bottom: 10px;
+        background-color: #1e1e1e;
+        color: #e0e0e0;
+        border: 1px solid #333;
+        border-radius: 4px;
       }
     </style>
   </head>
   <body>
+    <a href="https://learnifai-3.onrender.com" target="_blank" class="website-link">🌐 Visit LearnifAI</a>
+    <div class="description">Your AI-powered assistant for smarter learning!</div>
+
     <h3>🧠 LearnifAI</h3>
 
     <button id="select-btn">📋 Get Selected Text</button><br />
