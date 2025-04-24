@@ -4,10 +4,10 @@ import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './db/connectDataBase.js';
 import cors from 'cors';
-
+import cookieParser from "cookie-parser";
 //import routes
 import groqRoutes from './routes/groq.route.js';
-
+import authRoutes from "./routes/auth.routes.js"
 
 // Load environment variables
 dotenv.config();
@@ -21,11 +21,13 @@ app.use(cors({
   origin :"http://localhost:5173",
   credentials: true
 }))
+app.use(cookieParser());
 
 // Connect to MongoDB
 connectDB();
 
 app.use('/api/groq', groqRoutes);
+app.use('/api/auth/',authRoutes)
 
 // Sample route
 app.get('/', (req, res) => {
