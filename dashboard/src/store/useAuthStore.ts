@@ -16,7 +16,6 @@ interface AuthStore{
   isSigningUp: boolean;
   isLoggingIn: boolean;
   isCheckingAuth: boolean;
-  currentPage: string | null;
   checkAuth: ()=>Promise<void>;
   signup: (data: AuthUser) =>Promise<void>;
   login: (data: {email: string; password: string})=>Promise<void>;
@@ -29,7 +28,6 @@ export const useAuthStore = create<AuthStore>((set) => ({
   isSigningUp: false,
   isLoggingIn: false,
   isCheckingAuth: false,
-  currentPage: null,
   checkAuth: async () => {
     // Add logic to check authentication
   },

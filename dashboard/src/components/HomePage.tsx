@@ -5,22 +5,22 @@ import { Button } from "./Button";
 
 const HomePage: React.FC = () => {
   return (
-    <div className="container mx-auto px-4 py-12 md:py-24 max-w-7xl mt-12">
+    <div className="container mx-auto px-4 py-12 md:py-24 max-w-7xl mt-12 bg-gray-900 text-gray-100">
       <div className="grid md:grid-cols-2 gap-12 items-center">
         <div className="space-y-8">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 text-blue-600">
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-800 text-blue-300">
             <span className="relative flex h-3 w-3 mr-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-400"></span>
             </span>
             Voice-Powered Doc Buddy
           </div>
 
-          <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-gray-900">
-            Understand Code with Your <span className="text-blue-500">Voice</span>
+          <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-gray-100">
+            Understand Code with Your <span className="text-blue-400">Voice</span>
           </h1>
 
-          <p className="text-xl text-gray-600">
+          <p className="text-xl text-gray-400">
             A Chrome extension that helps developers understand anything on their screen with voice commands. Select,
             speak, and get instant explanations using Groq's LLM.
           </p>
@@ -37,37 +37,34 @@ const HomePage: React.FC = () => {
               </Button>
             </a>
 
-
-
-            <Button className="flex items-center gap-2 border-gray-300">
+            <Button className="flex items-center gap-2 border-gray-600 text-gray-300 hover:text-gray-100">
               <Info className="h-5 w-5" />
               <Link to="/features" className="text-current">
                 Learn More
               </Link>
             </Button>
-
           </div>
 
-          <div className="flex items-center gap-2 text-gray-600">
+          <div className="flex items-center gap-2 text-gray-400">
             <div className="flex -space-x-2">
-              <div className="w-8 h-8 rounded-full bg-green-200 border-2 border-white"></div>
-              <div className="w-8 h-8 rounded-full bg-gray-300 border-2 border-white"></div>
-              <div className="w-8 h-8 rounded-full bg-blue-200 border-2 border-white"></div>
+              <div className="w-8 h-8 rounded-full bg-green-500 border-2 border-gray-900"></div>
+              <div className="w-8 h-8 rounded-full bg-gray-500 border-2 border-gray-900"></div>
+              <div className="w-8 h-8 rounded-full bg-blue-500 border-2 border-gray-900"></div>
             </div>
             <span>Trusted by 1,000+ developers</span>
           </div>
         </div>
 
-        <div className="relative ">
-          <div className="bg-white rounded-lg shadow-xl p-6 max-w-md mx-auto">
+        <div className="relative">
+          <div className="bg-gray-800 rounded-lg shadow-xl p-6 max-w-md mx-auto">
             <div className="flex gap-2 mb-4">
               <div className="w-3 h-3 rounded-full bg-red-500"></div>
               <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
               <div className="w-3 h-3 rounded-full bg-green-500"></div>
-              <div className="ml-auto text-sm text-gray-500">Chrome Extension</div>
+              <div className="ml-auto text-sm text-gray-400">Chrome Extension</div>
             </div>
 
-            <div className="bg-gray-900 text-white p-4 rounded-md font-mono text-sm mb-6">
+            <div className="bg-gray-700 text-gray-100 p-4 rounded-md font-mono text-sm mb-6">
               <pre>{`function processData(data) {
   return data.map(item => {
     return transform(item);
@@ -76,10 +73,10 @@ const HomePage: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center ">
+              <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 text-blue-500 hover:text-blue-700"
+                  className="h-5 w-5 text-white hover:text-blue-300"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -93,7 +90,7 @@ const HomePage: React.FC = () => {
               <span className="font-medium">"Explain this code"</span>
             </div>
 
-            <div className="bg-gray-50 p-4 rounded-md">
+            <div className="bg-gray-700 p-4 rounded-md">
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-white">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
@@ -107,18 +104,14 @@ const HomePage: React.FC = () => {
                 </div>
                 <span className="font-medium">LearnifAI Response</span>
               </div>
-              <p className="text-gray-600 text-sm">
+              <p className="text-gray-400 text-sm">
                 This code first accepts an array called data. It processes each item in the array by applying a transform function to it. After transforming all items, it uses a filter function to remove any items that do not meet certain validation criteria. Finally, it returns a new array containing only the transformed items that passed the validation check. In short, it transforms and filters the original data to create a clean, valid output array.
               </p>
-
             </div>
           </div>
         </div>
       </div>
     </div>
-
-
-
   );
 };
 
