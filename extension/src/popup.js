@@ -52,7 +52,7 @@ const handleSpeech = async (text, mode) => {
     speechSynthesis.speak(utterance);
   } else if (mode === 'groq') {
     try {
-      const response = await fetch('https://yourserver.com/api/tts', {
+      const response = await fetch('https://learnifai-1.onrender.com/api/tts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text }),
@@ -84,7 +84,7 @@ sendBtn.addEventListener('click', async () => {
     const finalPrompt = `Explain this:\n"${selectedText}"\n\nWith instruction:\n"${voiceText}"`;
     const mode = audioModeSelect.value;
 
-    const response = await fetch('http://localhost:3051/api/groq/ask', {
+    const response = await fetch('https://learnifai-1.onrender.com/api/groq/ask', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: finalPrompt }),
