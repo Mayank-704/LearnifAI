@@ -1,8 +1,9 @@
 import { Link, NavLink} from 'react-router-dom';
 import { Mic } from "lucide-react";
-
+import { useAuthStore } from '../store/useAuthStore';
 
 const Navbar: React.FC = () => {
+  const currentpage = useAuthStore();
   const handleScrollToFeatures = () => {
     const el = document.getElementById("features");
     if (el) {
@@ -27,6 +28,7 @@ const Navbar: React.FC = () => {
 
 
       <nav className="flex items-center space-x-6 gap-4">
+       {window.location.pathname !== "/history" ? <div>
         <button
           onClick={handleScrollToFeatures}
           className="text-gray-700 hover:text-blue-500"
@@ -35,11 +37,14 @@ const Navbar: React.FC = () => {
         </button>
         <NavLink
           to="/history"
-          className={({ isActive }) =>
-            isActive
+          className={({ isActive }) => {
+            if (isActive) {
+              console.log(currentpage);
+            }
+            return isActive
               ? "text-blue-500 font-bold underline"
-              : "text-gray-700 hover:text-blue-500"
-          }
+              : "text-gray-700 hover:text-blue-500";
+          }}
         >
           History
         </NavLink>
@@ -51,7 +56,13 @@ const Navbar: React.FC = () => {
         >
           Get Started
         </a>
-      </nav>
+       </div>
+        :
+        <h1 className="text-3xl font-bold text-gray-800 items-center absolute left-1/2 transform -translate-x-1/2">
+        History
+      </h1>
+        }
+      </nav> 
 
       {/* Buttons */}
       <div className="flex items-center space-x-4">
@@ -70,6 +81,7 @@ const Navbar: React.FC = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
+          :
           <button className="px-4 py-2 bg-green-500 text-white rounded-full hover:bg-green-600">
             Install Extension
           </button>
