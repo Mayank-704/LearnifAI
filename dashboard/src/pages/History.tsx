@@ -53,7 +53,7 @@ const History = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-900">
       <div className="flex items-center justify-between px-6 mt-4">
         <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
         <HistoryFilter currentFilter={filter} setFilter={setFilter} />

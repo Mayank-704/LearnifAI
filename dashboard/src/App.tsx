@@ -18,15 +18,15 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route
           path="/login"
-          element={!Cookies.get("authUser")? <LoginPage /> : <Navigate to="/" replace />}
+          element={!Cookies.get("token")? <LoginPage /> : <Navigate to="/" replace />}
         />
         <Route
           path="/signup"
-          element={!Cookies.get("authUser") ? <SignupPage /> : <Navigate to="/" replace />}
+          element={!Cookies.get("token") ? <SignupPage /> : <Navigate to="/" replace />}
         />
         <Route
           path="/history"
-          element={Cookies.get("authUser") ? <History /> : <Navigate to="/login" replace />}
+          element={Cookies.get("token") ? <History /> : <Navigate to="/login" replace />}
         />
       </Routes>
       <Footer />

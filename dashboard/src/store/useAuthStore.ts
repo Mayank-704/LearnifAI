@@ -75,7 +75,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
     // Add logic to handle login
     set({isLoggingIn: true})
     try {
-      const res = await axiosInstance.post<Omit<AuthUser, "password"> & { token: string }>(
+      const res = await axiosInstance.post<Omit<AuthUser, "password"> & { token?: string }>(
         "/auth/login",
         data,
         { withCredentials: true }

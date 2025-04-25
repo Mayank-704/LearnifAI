@@ -23,7 +23,7 @@ const Navbar: React.FC = () => {
   };
   const handleLogout = async()=>{
     await logout();
-    window.location.reload();
+    window.location.reload()
   }
 
   return (
@@ -75,7 +75,7 @@ const Navbar: React.FC = () => {
 
       {/* Buttons */}
       <div className="flex items-center space-x-4">
-       { Cookies.get("token")?<div className='flex items-center space-x-4'>
+       { !Cookies.get("token")?<div className='flex items-center space-x-4'>
         <Link to="/login">
           <button className="px-4 py-2 border border-blue-400 text-blue-400 rounded-full hover:bg-blue-800">
             Login
