@@ -21,9 +21,9 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 
 const allowedOrigins = [
-  'https://your-frontend-url.com', // your deployed frontend
+  'https://learnifai-3.onrender.com/', // your deployed frontend
   'http://localhost:5173', // your local frontend (optional for dev)
-  'chrome-extension://your-extension-id' // your Chrome extension
+  'chrome-extension://dcpnpggjlefcpknpnodokplkgkdkcafh' // your Chrome extension
 ];
 
 app.use(cors({
