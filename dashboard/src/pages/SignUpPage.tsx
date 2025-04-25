@@ -28,13 +28,18 @@ function SignupPage() {
       toast.error("Password is required");
       return false;
     }
-    if (formData.password.length < 6) {
-      toast.error("Password must be at least 6 characters");
+    if (formData.password.length < 8) {
+      toast.error("Password must be at least 8 characters");
       return false;
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       toast.error("Invalid email format");
+      return false;
+    }
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordRegex.test(formData.password)) {
+      toast.error("Invalid password format");
       return false;
     }
     return true;

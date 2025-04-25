@@ -6,7 +6,7 @@ import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage.tsx";
 import SignupPage from "./pages/SignUpPage.tsx";
 import History from "./pages/History";
-
+import { Toaster } from "react-hot-toast";
 import Cookies from "js-cookie";
 
 function App() {
@@ -30,7 +30,9 @@ function App() {
         />
       </Routes>
       <Footer />
+      <Toaster position="top-center" />
     </BrowserRouter>
+     
   );
 }
 
