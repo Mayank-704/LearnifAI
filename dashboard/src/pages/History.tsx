@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Navbar } from "../components/HistorySection/Navbar";
 import { SearchBar } from "../components/HistorySection/SearchBar";
 import { HistoryFilter } from "../components/HistorySection/HistoryFilter";
 import { QuestionCard } from "../components/HistorySection/QuestionCard";
@@ -55,8 +54,6 @@ const History = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
-
       <div className="flex items-center justify-between px-6 mt-4">
         <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
         <HistoryFilter currentFilter={filter} setFilter={setFilter} />

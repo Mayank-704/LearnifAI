@@ -1,35 +1,37 @@
-import Navbar from "./components/Navbar.tsx"
-import Footer from './components/Footer';
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import History from "./pages/History";
-import LandingPage from './pages/LandingPage';
-import FeatureSection from './components/LandingFeatures/FeatureSection';
+
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Navbar from "./components/Navbar.tsx";
+import Footer from "./components/Footer";
+import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage.tsx";
 import SignupPage from "./pages/SignUpPage.tsx";
-import { useAuthStore } from "./store/useAuthStore.ts";
-import { useEffect } from "react";
+import History from "./pages/History";
+
+import Cookies from "js-cookie";
 
 function App() {
-  const authUser = useAuthStore();
- useEffect(()=>{
-  
-  console.log(authUser)
- })
-
+ 
   return (
-    
     <BrowserRouter>
-    <Navbar/>
-    <Routes>
-      <Route path="/" element={<LandingPage />} />  
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/signup" element={<SignupPage />} />
-      <Route path="/history" element={<History />} />      
-      <Route path="/features" element={<FeatureSection />} />
-    </Routes>
-    <Footer/>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route
+          path="/login"
+          element={!Cookies.get("authUser")? <LoginPage /> : <Navigate to="/" replace />}
+        />
+        <Route
+          path="/signup"
+          element={!Cookies.get("authUser") ? <SignupPage /> : <Navigate to="/" replace />}
+        />
+        <Route
+          path="/history"
+          element={Cookies.get("authUser") ? <History /> : <Navigate to="/login" replace />}
+        />
+      </Routes>
+      <Footer />
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

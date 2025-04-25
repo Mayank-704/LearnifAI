@@ -3,12 +3,14 @@ import { Mic } from "lucide-react";
 import { usePathStore } from '../store/usePathStore';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
+import Cookies from 'js-cookie';
+import { useAuthStore } from '../store/useAuthStore';
 
 const Navbar: React.FC = () => {
+  const logout  = useAuthStore((state)=>state.logout)
   const currentPath = usePathStore((state) => state.currentPath);
   const location = useLocation();
   const setCurrentPath = usePathStore((state) => state.setCurrentPath);
-
   useEffect(() => {
     setCurrentPath(location.pathname);
   }, [location.pathname, setCurrentPath]);
@@ -19,6 +21,10 @@ const Navbar: React.FC = () => {
       el.scrollIntoView({ behavior: "smooth" });
     }
   };
+  const handleLogout = async()=>{
+    await logout();
+    window.location.reload();
+  }
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center p-2 shadow-md bg-gray-900 text-white">
@@ -53,14 +59,12 @@ const Navbar: React.FC = () => {
             >
               History
             </NavLink>
-            <a
-              href="https://www.youtube.com/"
-              target="_blank"
-              rel="noopener noreferrer"
+            <NavLink
+              to="/get-started"
               className="text-gray-300 hover:text-blue-400"
             >
               Get Started
-            </a>
+            </NavLink>
           </div>
         ) : (
           <h1 className="text-3xl font-bold text-gray-200 items-center absolute left-1/2 transform -translate-x-1/2">
@@ -71,6 +75,7 @@ const Navbar: React.FC = () => {
 
       {/* Buttons */}
       <div className="flex items-center space-x-4">
+       { Cookies.get("token")?<div className='flex items-center space-x-4'>
         <Link to="/login">
           <button className="px-4 py-2 border border-blue-400 text-blue-400 rounded-full hover:bg-blue-800">
             Login
@@ -81,6 +86,14 @@ const Navbar: React.FC = () => {
             Sign Up
           </button>
         </Link>
+       </div> :
+        <button
+          onClick={handleLogout}
+          className="px-4 py-2 border border-red-400 text-red-400 rounded-full hover:bg-red-800"
+        >
+          Logout
+        </button>
+        }
         <a
           href="https://chrome.google.com/webstore"
           target="_blank"

@@ -16,6 +16,7 @@ interface AuthStore{
   isSigningUp: boolean;
   isLoggingIn: boolean;
   isCheckingAuth: boolean;
+  setAuthUser: (user: (Omit<AuthUser, "password"> & { token?: string }) | null) => void;
   checkAuth: ()=>Promise<void>;
   signup: (data: AuthUser) =>Promise<void>;
   login: (data: {email: string; password: string})=>Promise<void>;
@@ -23,13 +24,27 @@ interface AuthStore{
 
 }
 
+
 export const useAuthStore = create<AuthStore>((set) => ({
   authUser: JSON.parse(localStorage.getItem("authUser") || "null"),
   isSigningUp: false,
   isLoggingIn: false,
   isCheckingAuth: false,
+
+  setAuthUser: (user) => set({ authUser: user }),
+
   checkAuth: async () => {
-    // Add logic to check authentication
+    set({isCheckingAuth: true})
+    try {
+      // const res = await axiosInstance.get("/auth/check");
+      const storedUser = localStorage.getItem("authUser")
+      set({ authUser: JSON.parse(storedUser || "null") });
+    } catch (error) {
+      console.log("Error in check-auth:", error);
+      set({ authUser: null });
+    } finally {
+      set({ isCheckingAuth: false });
+    }
   },
   signup: async (data: AuthUser) => {
     set({isSigningUp: true})
