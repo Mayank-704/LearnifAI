@@ -58,12 +58,13 @@ export const login = async (req, res) => {
         message: "Invalid Password",
       });
 
-    generateToken(user._id, res);
+  const generatedToken =  generateToken(user._id, res);
 
     res.status(200).json({
-      _id: user._id,
+      id: user._id,
       fullName: user.fullName,
       email: user.email,
+      token: generatedToken
     });
   } catch (error) {
     console.log("Error in Login controller", error.message);
