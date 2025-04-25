@@ -8,12 +8,12 @@ export const generateToken = (userId, res) => {
         }
     )
 
-    res.cookie("token",token,{
-        maxAge: 7*24*60*60*1000, //in millisecond
-        httpOnly:true, //prevent Xss Attacks cross site scripting attack
-        sameSite:"strict",//CSRF attacks cross site request forgery attack
-        secure: process.env.NODE_ENVIRONMENT !== "development"
-    })
+    // res.cookie("token",token,{
+    //     maxAge: 7*24*60*60*1000, //in millisecond
+    //     httpOnly:true, //prevent Xss Attacks cross site scripting attack
+    //     sameSite:"strict",//CSRF attacks cross site request forgery attack
+    //     secure: process.env.NODE_ENVIRONMENT !== "development"
+    // })
 
     return token;
 
