@@ -4,7 +4,7 @@ const FeatureSection = () => {
   return (
     <section
       id="features"
-      className="py-16 px-4 max-w-7xl mx-auto bg-white dark:bg-gray-900"
+      className="py-16 px-4 max-w-full mx-auto bg-white dark:bg-gray-900 "
     >
       <div className="text-center mb-20">
         <h2 className="text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">

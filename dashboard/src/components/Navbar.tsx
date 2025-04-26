@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 import { useAuthStore } from '../store/useAuthStore';
 
 const Navbar: React.FC = () => {
-  const logout  = useAuthStore((state)=>state.logout)
+  const logout = useAuthStore((state) => state.logout)
   const currentPath = usePathStore((state) => state.currentPath);
   const location = useLocation();
   const setCurrentPath = usePathStore((state) => state.setCurrentPath);
@@ -21,7 +21,7 @@ const Navbar: React.FC = () => {
       el.scrollIntoView({ behavior: "smooth" });
     }
   };
-  const handleLogout = async()=>{
+  const handleLogout = async () => {
     await logout();
     window.location.reload()
   }
@@ -59,12 +59,14 @@ const Navbar: React.FC = () => {
             >
               History
             </NavLink>
-            <NavLink
-              to="/get-started"
+            <a
+              href="https://github.com/Mayank-704/LearnifAI"
               className="text-gray-300 hover:text-blue-400"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Get Started
-            </NavLink>
+            </a>
           </div>
         ) : (
           <h1 className="text-3xl font-bold text-gray-200 items-center absolute left-1/2 transform -translate-x-1/2">
@@ -75,32 +77,29 @@ const Navbar: React.FC = () => {
 
       {/* Buttons */}
       <div className="flex items-center space-x-4">
-       { !Cookies.get("token")?<div className='flex items-center space-x-4'>
-        <Link to="/login">
-          <button className="px-4 py-2 border border-blue-400 text-blue-400 rounded-full hover:bg-blue-800">
-            Login
+        {!Cookies.get("token") ? <div className='flex items-center space-x-4'>
+          <Link to="/login">
+            <button className="px-4 py-2 border border-blue-400 text-blue-400 rounded-full hover:bg-blue-800">
+              Login
+            </button>
+          </Link>
+          <Link to="/signup">
+            <button className="px-4 py-2 bg-blue-400 text-white rounded-full hover:bg-blue-500">
+              Sign Up
+            </button>
+          </Link>
+        </div> :
+          <button
+            onClick={handleLogout}
+            className="px-4 py-2 border border-red-400 text-red-400 rounded-full hover:bg-red-800"
+          >
+            Logout
           </button>
-        </Link>
-        <Link to="/signup">
-          <button className="px-4 py-2 bg-blue-400 text-white rounded-full hover:bg-blue-500">
-            Sign Up
-          </button>
-        </Link>
-       </div> :
-        <button
-          onClick={handleLogout}
-          className="px-4 py-2 border border-red-400 text-red-400 rounded-full hover:bg-red-800"
-        >
-          Logout
-        </button>
         }
-        <a
-          href="https://chrome.google.com/webstore"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+                    <a href="/path/to/extension/folder.zip" download>
+
           <button className="px-4 py-2 bg-green-500 text-white rounded-full hover:bg-green-600">
-            Install Extension
+            Download Extension
           </button>
         </a>
       </div>
