@@ -1,20 +1,16 @@
-import { MessageSquare, CheckCircle, Clock } from "lucide-react";
+import { MessageSquare } from "lucide-react";
 
 interface QuestionCardProps {
   question: string;
   askedAt: string;
-  answeredAt?: string;
   answer?: string;
-  status: "answered" | "pending";
   darkMode?: boolean;
 }
 
 export const QuestionCard: React.FC<QuestionCardProps> = ({
   question,
   askedAt,
-  answeredAt,
   answer,
-  status,
   darkMode = true,
 }) => {
   return (
@@ -25,9 +21,9 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
           : "bg-white text-gray-900"
       }`}
     >
-      <div className="flex items-start justify-between">
+       <div className="flex items-start ">
         <h2 className="text-xl font-semibold">{question}</h2>
-        {status === "answered" ? (
+      {/*  {status === "answered" ? (
           <div
             className={`flex items-center gap-1 px-2 py-1 rounded-full text-sm ${
               darkMode
@@ -47,8 +43,8 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
           >
             <Clock size={16} /> Not Answered
           </div>
-        )}
-      </div>
+        )}*/}
+      </div> 
 
       <div
         className={`flex items-center gap-6 text-sm mt-2 ${
@@ -59,12 +55,6 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
           <MessageSquare size={16} />
           Asked {askedAt}
         </div>
-        {answeredAt && (
-          <div className="flex items-center gap-1">
-            <CheckCircle size={16} />
-            Answered {answeredAt}
-          </div>
-        )}
       </div>
 
       <p className={`mt-4 ${darkMode ? "text-gray-300" : "text-gray-700"}`}>

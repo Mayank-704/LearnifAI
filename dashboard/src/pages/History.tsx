@@ -1,73 +1,97 @@
-import { useState } from "react";
-import { SearchBar } from "../components/HistorySection/SearchBar";
-import { HistoryFilter } from "../components/HistorySection/HistoryFilter";
+import { useEffect, useState } from "react";
 import { QuestionCard } from "../components/HistorySection/QuestionCard";
-
-interface Question {
-  id: number;
-  type: "code" | "text";
+import Cookies from "js-cookie";
+interface HistoryItem {
+  _id: string;
+  userId: string;
   question: string;
-  askedAt: string;
-  answeredAt?: string;
-  answer?: string;
-  status: "answered" | "pending";
+  answer: string;
+  timestamp: string;
+  __v: number;
 }
-
-const sampleQuestions: Question[] = [
-  {
-    id: 1,
-    type: "code",
-    question: "How do I implement authentication in a React application?",
-    askedAt: "Apr 15, 2023 at 10:30 AM",
-    answeredAt: "Apr 15, 2023 at 2:45 PM",
-    answer: "You can use libraries like Firebase Authentication, Auth0, or implement your own using JWT tokens.",
-    status: "answered",
-  },
-  {
-    id: 2,
-    type: "text",
-    question: "What's the best way to manage global state in a large React application?",
-    askedAt: "Apr 17, 2023 at 9:15 AM",
-    answeredAt: "Apr 17, 2023 at 11:20 AM",
-    answer: "Consider using Redux, Redux Toolkit, or Zustand for simpler needs.",
-    status: "answered",
-  },
-  {
-    id: 3,
-    type: "code",
-    question: "How to optimize React performance for large lists?",
-    askedAt: "Apr 18, 2023 at 12:00 PM",
-    answer: "",
-    status: "pending",
-  },
-];
 
 const History = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [filter, setFilter] = useState<"all" | "code" | "text">("all");
+  const [history, setHistory] = useState<HistoryItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const filteredQuestions = sampleQuestions.filter((q) => {
-    const matchesSearch = q.question.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesFilter = filter === "all" || q.type === filter;
-    return matchesSearch && matchesFilter;
-  });
+  const fetchHistory = async () => {
+    const token = Cookies.get("token");
+
+    if (!token) {
+      setError("Unauthorized: No token found");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const response = await fetch('https://learnifai-1.onrender.com/api/history/gethistory', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      console.log(response)
+      if (!response.ok) {
+        throw new Error(`Failed to fetch: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      setHistory(data.history || []);
+      setError(null);
+    } catch (err) {
+      console.error("Fetch Error:", err);
+      setError("Failed to load history. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchHistory();
+  }, []);
+
+  const filteredQuestions = history.filter((q) =>
+    q.question.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="min-h-screen bg-gray-900">
       <div className="flex items-center justify-between px-6 mt-4">
-        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-        <HistoryFilter currentFilter={filter} setFilter={setFilter} />
+        <div className="flex items-center gap-2 mx-auto w-full max-w-lg">
+          <input
+        type="text"
+        placeholder="Search questions..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="flex-grow border p-2 rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          {searchQuery && (
+        <button
+          onClick={() => setSearchQuery("")}
+          className="text-sm text-gray-600"
+        >
+          Clear
+        </button>
+          )}
+        </div>
       </div>
 
       <div className="p-6 max-w-4xl mx-auto">
-        {filteredQuestions.map((q) => (
+        {loading && <div className="text-white text-center">Loading...</div>}
+        {error && <div className="text-red-500 text-center">{error}</div>}
+        {!loading && !error && filteredQuestions.length === 0 && (
+          <div className="text-gray-400 text-center">No history found. Save your responses from extension to get history of your asked questions.</div>
+        )}
+        {!loading && !error && filteredQuestions.map((q) => (
           <QuestionCard
-            key={q.id}
+            key={q._id}
             question={q.question}
-            askedAt={q.askedAt}
-            answeredAt={q.answeredAt || ""}
-            answer={q.answer || ""}
-            status={q.status}
+            askedAt={new Date(q.timestamp).toLocaleString()}
+            answer={q.answer}
           />
         ))}
       </div>
