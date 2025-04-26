@@ -1,27 +1,28 @@
 {
-    "manifest_version": 3,
-    "name": "LearnifAI",
-    "version": "1.0",
-    "description": "AI-powered assistant to explain documentation with voice and text selection.",
-    "action": {
-      "default_popup": "src/popup.html"
-    },
-    "permissions": [
-      "activeTab",
-      "scripting"
-    ],
-    "host_permissions": [
-      "<all_urls>"
-    ],
-    "background": {
-      "service_worker": "src/background.js",
-      "type": "module"
-    },
-    "content_scripts": [
-      {
-        "matches": ["<all_urls>"],
-        "js": ["src/content.js"]
-      }
-    ]
-  }
-  
+  "manifest_version": 3,
+  "name": "LearnifAI",
+  "version": "1.0",
+  "description": "AI-powered assistant to explain documentation with voice and text selection.",
+  "action": {
+    "default_popup": "src/popup.html"
+  },
+  "permissions": [
+    "cookies",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "https://learnifai-3.onrender.com/"  
+  ],
+  "background": {
+    "service_worker": "src/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/content.js"]
+    }
+  ]
+}

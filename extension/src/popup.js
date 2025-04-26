@@ -9,6 +9,56 @@ const selectedTextDiv = document.getElementById('selected-text');
 const voiceTextDiv = document.getElementById('voice-text');
 const resultBox = document.getElementById('result');
 const audioModeSelect = document.getElementById('audio-mode'); // New: <select id="audio-mode">
+const saveBtn = document.getElementById('save-btn');
+
+
+//Save Response in dashboard
+saveBtn.addEventListener('click',()=>{
+  // if (!selectedText || !voiceText) {
+  //   resultBox.textContent = '⚠️ Please provide both selected text and voice input before saving.';
+  //   return;
+  // }
+
+  // const question = `${voiceText}:\n"${selectedText}"`;
+  // const answer = resultBox.textContent.replace(/^✅ Response from Groq:\n"/, '').replace(/"$/, '');
+  const question = "I am Question";
+  const answer = "I am Answer";
+
+try {
+  chrome.cookies.get({ url: 'https://learnifai-3.onrender.com', name: 'token' }, function(cookie) {
+    let token; // Changed from const to let
+    if (cookie) {
+      console.log("Token retrieved:", cookie.value);
+      token = cookie.value;
+    } else {
+      console.log("Didn't get cookie from user");
+      return;
+    }
+    // Now send the fetch request and manually attach the token
+    fetch('https://learnifai-1.onrender.com/api/history/save', {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // 👈 sending token manually in Authorization header
+      },
+      body: JSON.stringify({ question, answer }),
+    })
+    .then((response) => {
+      console.log(response);
+      if (!response.ok) throw new Error('Failed to save data');
+
+      resultBox.textContent = '✅ Data saved successfully!';
+    })
+    .catch((err) => {
+      console.error('Save error:', err);
+      resultBox.textContent = `❌ Save error: ${err.message}`;
+    });
+  });
+} catch (err) {
+  console.error('Unexpected error:', err);
+  resultBox.textContent = `❌ Unexpected error: ${err.message}`;
+}
+});
 
 // Get selected text from content script
 selectBtn.addEventListener('click', () => {
@@ -81,7 +131,8 @@ sendBtn.addEventListener('click', async () => {
   resultBox.textContent = '🚀 Sending to Groq...';
 
   try {
-    const finalPrompt = `Explain this:\n"${selectedText}"\n\nWith instruction:\n"${voiceText}"`;
+    const finalPrompt = `${voiceText}:\n"${selectedText}`;
+    console.log(finalPrompt);
     const mode = audioModeSelect.value;
 
     const response = await fetch('https://learnifai-1.onrender.com/api/groq/ask', {
