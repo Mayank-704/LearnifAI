@@ -14,15 +14,13 @@ const saveBtn = document.getElementById('save-btn');
 
 //Save Response in dashboard
 saveBtn.addEventListener('click',()=>{
-  // if (!selectedText || !voiceText) {
-  //   resultBox.textContent = '⚠️ Please provide both selected text and voice input before saving.';
-  //   return;
-  // }
+  if (!selectedText || !voiceText) {
+    resultBox.textContent = '⚠️ Please provide both selected text and voice input before saving.';
+    return;
+  }
 
-  // const question = `${voiceText}:\n"${selectedText}"`;
-  // const answer = resultBox.textContent.replace(/^✅ Response from Groq:\n"/, '').replace(/"$/, '');
-  const question = "I am Question";
-  const answer = "I am Answer";
+  const question = `${voiceText}:\n"${selectedText}"`;
+  const answer = resultBox.textContent.replace(/^✅ Response from Groq:\n"/, '').replace(/"$/, '');
 
 try {
   chrome.cookies.get({ url: 'https://learnifai-3.onrender.com', name: 'token' }, function(cookie) {
@@ -102,12 +100,16 @@ const handleSpeech = async (text, mode) => {
     speechSynthesis.speak(utterance);
   } else if (mode === 'groq') {
     try {
-      const response = await fetch('https://learnifai-1.onrender.com/api/tts', {
+      const response = await fetch('https://learnifai-1.onrender.com/api/groq/tts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text }),
       });
-
+      console.log(response)
+        if (response.status === 429) {
+          resultBox.textContent = '❌ Groq TTS Rate limit exceeded.Playing Browser TTS';
+          return;
+        }
       if (!response.ok) throw new Error('Groq TTS failed');
 
       const audioBlob = await response.blob();
