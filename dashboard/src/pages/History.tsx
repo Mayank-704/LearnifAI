@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { QuestionCard } from "../components/HistorySection/QuestionCard";
 import Cookies from "js-cookie";
+import { Search } from "lucide-react"; // Import the search icon
+
 interface HistoryItem {
   _id: string;
   userId: string;
@@ -40,7 +42,8 @@ const History = () => {
       }
 
       const data = await response.json();
-      setHistory(data.history || []);
+      console.log(data)
+      setHistory(data || []);
       setError(null);
     } catch (err) {
       console.error("Fetch Error:", err);
@@ -59,32 +62,32 @@ const History = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-900">
-      <div className="flex items-center justify-between px-6 mt-4">
-        <div className="flex items-center gap-2 mx-auto w-full max-w-lg">
-          <input
-        type="text"
-        placeholder="Search questions..."
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        className="flex-grow border p-2 rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          {searchQuery && (
-        <button
-          onClick={() => setSearchQuery("")}
-          className="text-sm text-gray-600"
-        >
-          Clear
-        </button>
-          )}
-        </div>
-      </div>
-
+    <div className="min-h-screen bg-gray-900 pt-24">
       <div className="p-6 max-w-4xl mx-auto">
-        {loading && <div className="text-white text-center">Loading...</div>}
+        {/* Search Bar */}
+        <div className="mb-8 relative">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <Search className="w-5 h-5 text-gray-400" />
+          </div>
+          <input
+            type="text"
+            placeholder="Search questions..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full p-2 pl-10 border rounded-2xl border-gray-700  bg-gray-800 text-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          />
+        </div>
+
+        {loading && (
+          <div className="flex justify-center items-center h-64">
+            <div className="w-16 h-16 border-4 border-blue-500 border-dotted rounded-full animate-spin"></div>
+          </div>
+        )}
         {error && <div className="text-red-500 text-center">{error}</div>}
         {!loading && !error && filteredQuestions.length === 0 && (
-          <div className="text-gray-400 text-center">No history found. Save your responses from extension to get history of your asked questions.</div>
+          <div className="text-gray-400 text-center">
+            No history found. Save your responses from extension to get history of your asked questions.
+          </div>
         )}
         {!loading && !error && filteredQuestions.map((q) => (
           <QuestionCard
