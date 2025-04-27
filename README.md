@@ -83,7 +83,7 @@ In the top-right corner of the Extensions page, toggle the **Developer mode** sw
 ---
 
 ### 5. Load the Unpacked Extension
-Click the **Load unpacked** button and select the **folder** where you extracted the ZIP file.
+Click the **Load unpacked** button and select the **folder** where you extracted the ZIP file (Make sure you unpacked right folder as right folder is nested under extracted extension folder).
 
 > ✅ The extension should now appear in your list of installed extensions.
 
