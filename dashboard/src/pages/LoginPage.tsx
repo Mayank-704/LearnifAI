@@ -67,7 +67,7 @@ const isLoggingIn = useAuthStore((state) => state.isLoggingIn);
   };
 
   return (
-    <div className="relative h-auto md:h-[90vh] w-full flex justify-center items-center p-6 bg-gray-900 text-gray-200">
+    <div className="relative pt-20 h-auto md:h-[90vh] w-full flex justify-center items-center p-6 bg-gray-900 text-gray-200">
       {/* Form Container */}
       <div className="relative z-10 bg-gray-800 p-8 rounded-lg shadow-lg max-w-lg w-full">
         <h2 className="text-3xl font-bold mb-6 text-center text-purple-400">Welcome Back</h2>

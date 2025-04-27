@@ -39,8 +39,10 @@ function SignupPage() {
     }
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (!passwordRegex.test(formData.password)) {
-      toast.error("Invalid password format");
-      return false;
+toast.error(
+        "Password must be at least 8 characters long and include at least one letter, one number, and one special character"
+      );
+            return false;
     }
     return true;
   };
@@ -61,7 +63,7 @@ function SignupPage() {
   };
 
   return (
-    <div className="dark">
+    <div className="dark pt-12">
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900">
         <div className="w-full max-w-md p-8 space-y-6 bg-gray-800 rounded shadow-md">
           <h2 className="text-2xl font-bold text-center text-white">Sign Up</h2>

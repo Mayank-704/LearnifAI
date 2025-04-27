@@ -15,10 +15,10 @@ function App() {
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={Cookies.get("token") ? <LandingPage /> : <Navigate to="/login" replace />} />
         <Route
           path="/login"
-          element={!Cookies.get("token")? <LoginPage /> : <Navigate to="/" replace />}
+          element={!Cookies.get("token") ? <LoginPage /> : <Navigate to="/" replace />}
         />
         <Route
           path="/signup"
