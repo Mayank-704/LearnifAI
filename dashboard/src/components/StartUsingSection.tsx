@@ -2,12 +2,12 @@ import React from "react";
 import { FaGithub, FaTwitter } from "react-icons/fa";
 
 const StartUsingSection: React.FC = () => {
-  const handleChromeClick = (): void => {
-    window.open("https://www.youtube.com/", "_blank");
-  };
+  // const handleChromeClick = (): void => {
+  //   window.open("https://www.youtube.com/", "_blank");
+  // };
 
   const handleGitHubClick = (): void => {
-    window.open("https://github.com/Mayank-704", "_blank");
+    window.open("https://github.com/Mayank-704/LearnifAI", "_blank");
   };
 
   const handleTwitterClick = (): void => {
@@ -24,7 +24,7 @@ const StartUsingSection: React.FC = () => {
         assistance. Installation takes less than a minute.
       </p>
 
-      <button
+      {/* <button
         onClick={handleChromeClick}
         className="bg-white text-gray-800 px-6 py-3 rounded-md font-medium flex items-center gap-2 hover:bg-gray-100 transition mb-8"
       >
@@ -34,7 +34,7 @@ const StartUsingSection: React.FC = () => {
           className="w-5 h-5"
         />
         Add to Chrome
-      </button>
+      </button> */}
 
       <div className="flex gap-6">
         <FaGithub
