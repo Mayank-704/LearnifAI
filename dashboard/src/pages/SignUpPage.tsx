@@ -54,7 +54,7 @@ function SignupPage() {
 
     try {
       await signup(formData); // Await the signup function
-      toast.success("Signup successful!");
+      // toast.success("Signup successful!");
       navigate("/"); // Redirect to the home page after successful signup
     } catch (err) {
       console.error("Signup error:", err);
