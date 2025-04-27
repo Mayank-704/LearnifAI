@@ -58,7 +58,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
       set({authUser: res.data});
       localStorage.setItem("authUser",JSON.stringify(res.data));
       // localStorage.setItem("authUser", JSON.stringify(res.data)); // Save auth state locally
-      toast.success("Signup succesfully")
+      // toast.success("Signup succesfully")  create two toast notification for successful signup
     } catch (error) {
      
       console.log(error)

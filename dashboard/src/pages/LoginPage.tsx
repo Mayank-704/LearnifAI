@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useAuthStore } from "../store/useAuthStore";
 import { NavLink } from "react-router-dom";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 interface LoginForm {
   email: string;
@@ -105,7 +106,7 @@ const isLoggingIn = useAuthStore((state) => state.isLoggingIn);
                 className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-200"
                 onClick={() => setPassword(!showPassword)}
               >
-                {showPassword ? "🙈" : "👁️"}
+                {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
               </button>
             </div>
           </div>

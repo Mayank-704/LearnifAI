@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore.ts";
 import { toast } from "react-hot-toast";
 import { NavLink, useNavigate } from "react-router-dom";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+
 
 function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -116,7 +118,7 @@ function SignupPage() {
                     setShowPassword((prev) => !prev);
                   }}
                 >
-                  {showPassword ? "🙈" : "👁️"}
+                  {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
                 </span>
               </div>
             </div>
