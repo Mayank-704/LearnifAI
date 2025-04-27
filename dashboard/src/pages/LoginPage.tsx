@@ -9,7 +9,7 @@ interface LoginForm {
   password: string;
 }
 
-function LoginPage() {
+function LoginPage({ onAuthChange }: { onAuthChange: () => void }) {
   const [showPassword, setPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<LoginForm>({
@@ -58,6 +58,7 @@ const isLoggingIn = useAuthStore((state) => state.isLoggingIn);
     setLoading(true);
     try {
       await login(formData);
+      onAuthChange();
       window.location.href = "/";
     } catch (error) {
       console.error("Login error:", error);
@@ -68,7 +69,7 @@ const isLoggingIn = useAuthStore((state) => state.isLoggingIn);
   };
 
   return (
-    <div className="relative pt-20 h-auto md:h-[90vh] w-full flex justify-center items-center p-6 bg-gray-900 text-gray-200">
+    <div className="relative h-auto md:h-[90vh] w-full flex justify-center items-center p-6 bg-gray-900 text-gray-200">
       {/* Form Container */}
       <div className="relative z-10 bg-gray-800 p-8 rounded-lg shadow-lg max-w-lg w-full">
         <h2 className="text-3xl font-bold mb-6 text-center text-purple-400">Welcome Back</h2>
@@ -124,7 +125,7 @@ const isLoggingIn = useAuthStore((state) => state.isLoggingIn);
           <div className="text-center">
             <p>
               Don't have an account?{" "}
-              <NavLink to="/register" className="text-purple-400 hover:underline">
+              <NavLink to="/signup" className="text-purple-400 hover:underline">
                 Sign up
               </NavLink>
             </p>
