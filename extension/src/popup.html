@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LearnifAI</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 15px;
+        width: 300px;
+        background-color: #121212;
+        color: #e0e0e0;
+      }
+      a.website-link {
+        display: block;
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+        color: #1e90ff;
+        text-decoration: none;
+        margin-bottom: 10px;
+      }
+      a.website-link:hover {
+        text-decoration: underline;
+      }
+      .description {
+        text-align: center;
+        font-size: 12px;
+        color: #b0b0b0;
+        margin-bottom: 15px;
+      }
+      button {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        color: white;
+      }
+      #select-btn {
+        background-color: #1e90ff;
+        margin-bottom: 8px;
+      }
+      #listen-btn {
+        background-color: #6f42c1;
+        margin-bottom: 8px;
+      }
+      #send-btn {
+        background-color: #28a745;
+        flex: 1;
+      }
+      #cancel-btn {
+        background-color: #dc3545;
+        flex: 1;
+      }
+      #save-btn {
+        background-color: #4c95e9;
+        margin-top: 12px;
+        width: 100%;
+      }
+      #preview {
+        background: #1e1e1e;
+        padding: 10px;
+        border-radius: 6px;
+        margin-bottom: 12px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+      }
+      #result {
+        font-size: 14px;
+        margin-top: 10px;
+        white-space: pre-wrap;
+        color: #b0b0b0;
+      }
+      #audio-mode {
+        margin-bottom: 10px;
+        background-color: #1e1e1e;
+        color: #e0e0e0;
+        border: 1px solid #333;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="https://learnifai-3.onrender.com" target="_blank" class="website-link">🌐 Visit LearnifAI</a>
+    <div class="description">Your AI-powered assistant for smarter learning!</div>
+
+    <h3>🧠 LearnifAI</h3>
+
+    <button id="select-btn">📋 Get Selected Text</button><br />
+    <button id="listen-btn">🎤 Listen to Voice</button>
+
+    <div id="preview">
+      <strong>Selected Text:</strong>
+      <div id="selected-text" style="margin-bottom: 10px"></div>
+
+      <strong>Voice Command:</strong>
+      <div id="voice-text" style="margin-bottom: 10px"></div>
+    </div>
+    <select id="audio-mode">
+      <option value="groq">Groq TTS</option>
+      <option value="browser">Browser TTS</option>
+    </select>
+    <div style="display: flex; gap: 10px">
+      <button id="send-btn">🚀 Send</button>
+      <button id="cancel-btn">❌ Cancel</button>
+    </div>
+
+    <button id="save-btn">💾 Save</button>
+
+    <div id="result">Status will appear here...</div>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
