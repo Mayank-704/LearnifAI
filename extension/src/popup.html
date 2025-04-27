@@ -71,12 +71,19 @@
         white-space: pre-wrap;
         color: #b0b0b0;
       }
-      #audio-mode {
+      #audio-mode,
+      #model-selector {
         margin-bottom: 10px;
         background-color: #1e1e1e;
         color: #e0e0e0;
         border: 1px solid #333;
         border-radius: 4px;
+        width: 48%;
+      }
+      .controls {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
       }
     </style>
   </head>
@@ -96,11 +103,26 @@
       <strong>Voice Command:</strong>
       <div id="voice-text" style="margin-bottom: 10px"></div>
     </div>
-    <select id="audio-mode">
-      <option value="groq">Groq TTS</option>
-      <option value="browser">Browser TTS</option>
-    </select>
-    <div style="display: flex; gap: 10px">
+
+    <div class="controls">
+      <select id="audio-mode">
+        <option value="groq">Groq TTS</option>
+        <option value="browser">Browser TTS</option>
+      </select>
+
+      <select id="model-selector"> 
+        <option value="gemma2-9b-it">Gemma 2 (Google)</option>
+        <option value="llama-3.1-8b-instant">Llama 3.1 Instant (Meta)</option>
+        <option value="llama-3.3-70b-versatile">Llama 3.3 Versatile (Meta)</option>
+        <option value="llama-guard-3-8b">Llama Guard 3 (Meta)</option>
+        <option value="llama3-70b-8192">Llama 3 70B 8192 (Meta)</option>
+        <option value="llama3-8b-8192">Llama 3 8B 8192 (Meta)</option>
+        <option value="meta-llama/llama-4-maverick-17b-128e-instruct">Llama 4 Maverick 17B 128E Instruct (Meta)</option>
+        <option value="meta-llama/llama-4-scout-17b-16e-instruct">Llama 4 Scout 17B 16E Instruct (Meta)</option>
+      </select>
+    </div>
+
+    <div class="controls">
       <button id="send-btn">🚀 Send</button>
       <button id="cancel-btn">❌ Cancel</button>
     </div>
