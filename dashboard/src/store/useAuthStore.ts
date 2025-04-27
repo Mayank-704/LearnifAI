@@ -4,6 +4,7 @@ import Cookies from "js-cookie"
 import { AxiosError } from "axios";
 import toast from "react-hot-toast";
 
+
 interface AuthUser{
   id?: string;
   fullName: string;
@@ -58,7 +59,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
       set({authUser: res.data});
       localStorage.setItem("authUser",JSON.stringify(res.data));
       // localStorage.setItem("authUser", JSON.stringify(res.data)); // Save auth state locally
-      toast.success("Signup succesfully")
+      toast.success("Signup succesfully")  
     } catch (error) {
      
       console.log(error)
@@ -96,7 +97,9 @@ export const useAuthStore = create<AuthStore>((set) => ({
   },
   logout: async () => {
     // Add logic to handle logout
+    
     try{
+      
       set({authUser: null});
       localStorage.removeItem("authUser");
       Cookies.remove("token");
@@ -110,6 +113,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
     } finally {
       if (localStorage.getItem("authUser") === null) {
         console.log("Logged out successfully!");
+       
+
       }
     }
   },

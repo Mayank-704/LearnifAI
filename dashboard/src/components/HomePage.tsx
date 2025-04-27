@@ -35,11 +35,12 @@ const HomePage: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-5 mt-4">
 
             {/* Download Button */}
-            <a href="/path/to/extension/folder.zip" download>
+            <a href="/extension.zip" download>
               <Button className="bg-green-500 hover:bg-green-600 text-white flex items-center gap-2">
-                Download Extension
+              Download Extension
               </Button>
             </a>
+
 
             <Button className="bg-blue-500 hover:bg-blue-600 text-white flex items-center gap-2 ">
               <img

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore.ts";
 import { toast } from "react-hot-toast";
 import { NavLink, useNavigate } from "react-router-dom";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+
 
 function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -54,7 +56,7 @@ toast.error(
 
     try {
       await signup(formData); // Await the signup function
-      toast.success("Signup successful!");
+      // toast.success("Signup successful!");
       navigate("/"); // Redirect to the home page after successful signup
     } catch (err) {
       console.error("Signup error:", err);
@@ -118,7 +120,7 @@ toast.error(
                     setShowPassword((prev) => !prev);
                   }}
                 >
-                  {showPassword ? "🙈" : "👁️"}
+                  {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
                 </span>
               </div>
             </div>
