@@ -33,4 +33,26 @@ router.get('/gethistory', protectRoute, async (req, res) => {
   }
 });
 
+// Delete a particular history item
+router.delete('/delete/:id', protectRoute, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const historyItem = await History.findOneAndDelete({
+      _id: id,
+      userId: req.user._id
+    });
+
+    if (!historyItem) {
+      return res.status(404).json({ message: 'History item not found' });
+    }
+
+    res.json({ message: 'History item deleted successfully' });
+  } catch (err) {
+    console.error('Error deleting history item:', err.message);
+    res.status(500).json({ message: 'Failed to delete history item' });
+  }
+});
+
+
 export default router;

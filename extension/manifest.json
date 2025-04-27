@@ -13,7 +13,8 @@
   ],
   "host_permissions": [
     "<all_urls>",
-    "https://learnifai-3.onrender.com/"  
+    "https://learnifai-3.onrender.com/",
+    "http://localhost:3051/*" 
   ],
   "background": {
     "service_worker": "src/background.js",

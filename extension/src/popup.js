@@ -107,7 +107,8 @@ const handleSpeech = async (text, mode) => {
       });
       console.log(response)
         if (response.status === 429) {
-          resultBox.textContent = '❌ Groq TTS Rate limit exceeded.Playing Browser TTS';
+            alert('❌ Groq TTS Rate limit exceeded. Playing Browser TTS');
+          handleSpeech(text, 'browser'); // fallback
           return;
         }
       if (!response.ok) throw new Error('Groq TTS failed');
@@ -123,6 +124,31 @@ const handleSpeech = async (text, mode) => {
   }
 };
 
+
+
+function refineTextForTTS(text) {
+  if (!text) return '';
+
+  // 1. Remove unnecessary characters
+  text = text
+    .replace(/[`*_>#+=\-|]/g, '') // remove markdown special chars
+    .replace(/[\[\]{}]/g, '') // remove square and curly brackets
+    .replace(/["]{2,}/g, '"') // replace multiple quotes with one
+    .replace(/\n{2,}/g, '\n') // replace multiple newlines with single
+    .trim();
+
+  // 2. Improve code readability
+  text = text.replace(/```(\w+)?\n([\s\S]*?)```/g, (match, lang, code) => {
+    return `Start of code block. ${code.replace(/\n/g, '. ').trim()}. End of code block.`;
+  });
+
+  // 3. Optional: make single newlines into pauses for better reading
+  text = text.replace(/\n/g, '. ');
+
+  return text;
+}
+
+
 // Send final data to backend and play audio
 sendBtn.addEventListener('click', async () => {
   if (!selectedText || !voiceText) {
@@ -136,18 +162,25 @@ sendBtn.addEventListener('click', async () => {
     const finalPrompt = `${voiceText}:\n"${selectedText}`;
     console.log(finalPrompt);
     const mode = audioModeSelect.value;
+    const selectedModel = document.getElementById('model-selector').value;
 
     const response = await fetch('https://learnifai-1.onrender.com/api/groq/ask', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: finalPrompt }),
+      body: JSON.stringify({ 
+        query: finalPrompt, 
+        model: selectedModel  // Send the selected model with the request
+      }),
     });
 
     const data = await response.json();
     console.log(data);
     const responseText = data.response || data.text || data.message || 'No response';
 
-    resultBox.textContent = `✅ Response from Groq:\n"${responseText}"`;
+  // Clean the response for better TTS
+  const refinedResponseText = refineTextForTTS(responseText);
+
+    resultBox.textContent = `${refinedResponseText}`;
 
     handleSpeech(responseText, mode);
 
