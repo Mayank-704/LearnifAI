@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 export const handleGroqQuery = async (req, res) => {
-  const { query } = req.body;
+  const { query, model } = req.body;
 
   if (!query) {
     return res.status(400).json({ error: 'No query provided' });
@@ -12,8 +12,11 @@ export const handleGroqQuery = async (req, res) => {
     const groqRes = await axios.post(
       'https://api.groq.com/openai/v1/chat/completions',
       {
-        model: 'compound-beta', // or other model
-        messages: [{ role: 'user', content: query }],
+        model: `${model}`, // or other model
+        messages: [
+          { role: 'system', content: 'You are an expert AI assistant. Answer in a very simple, clear, and easy-to-speak manner, like explaining to a beginner.' },
+          { role: 'user', content: `Please explain this in a way that's easy to recite aloud: ${query}` }
+        ],
       },
       {
         headers: {

@@ -23,19 +23,22 @@ app.use(express.json());
 const allowedOrigins = [
   'https://learnifai-3.onrender.com', // your deployed frontend
   'http://localhost:5173', // your local frontend (optional for dev)
-  'chrome-extension://dcpnpggjlefcpknpnodokplkgkdkcafh' // your Chrome extension
 ];
 
 app.use(cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
+  origin: function (origin, callback) {
+    if (!origin) {
+      return callback(null, true);
+    }
+
+    if (allowedOrigins.includes(origin) || origin.startsWith('chrome-extension://')) {
+      return callback(null, true);
+    }
+
+    return callback(new Error('Not allowed by CORS'));
+  },
   credentials: true
-}))
+}));
 
 app.use(cookieParser());
 
