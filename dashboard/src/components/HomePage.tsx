@@ -1,13 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Info } from "lucide-react";
 import { Button } from "./Button";
 
 const HomePage: React.FC = () => {
   return (
-    <div className="container mx-auto px-4 py-12 md:py-24 max-w-7xl mt-12 bg-gray-900 text-gray-100">
+    <div className="container mx-auto px-4 py-12 md:py-24 max-w-full mt-12 bg-gray-900 text-gray-100">
       <div className="grid md:grid-cols-2 gap-12 items-center">
-        <div className="space-y-8">
+        <div className="space-y-8 mx-auto max-w-lg">
           <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-800 text-blue-300">
             <span className="relative flex h-3 w-3 mr-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75"></span>
@@ -25,36 +23,47 @@ const HomePage: React.FC = () => {
             speak, and get instant explanations using Groq's LLM.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4">
-            <a href="https://chrome.google.com/webstore" target="_blank" rel="noopener noreferrer">
-              <Button className="bg-blue-500 hover:bg-blue-600 text-white flex items-center gap-2">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/8/87/Google_Chrome_icon_%282011%29.png"
-                  alt="Chrome"
-                  className="w-5 h-5"
-                />
-                Add to Chrome
+          {/* Note Section */}
+          <div className="bg-yellow-100 text-yellow-800 p-4 rounded-md mt-8">
+            <p className="text-lg font-medium">
+              Note: The extension is currently under review in the Chrome Store. In the meantime, you can download the
+              extension folder to use it locally.
+            </p>
+          </div>
+
+          {/* Buttons Section */}
+          <div className="flex flex-col sm:flex-row gap-5 mt-4">
+
+            {/* Download Button */}
+            <a href="/path/to/extension/folder.zip" download>
+              <Button className="bg-green-500 hover:bg-green-600 text-white flex items-center gap-2">
+                Download Extension
               </Button>
             </a>
 
-            <Button className="flex items-center gap-2 border-gray-600 text-gray-300 hover:text-gray-100">
-              <Info className="h-5 w-5" />
-              <Link to="/features" className="text-current">
-                Learn More
-              </Link>
+            <Button className="bg-blue-500 hover:bg-blue-600 text-white flex items-center gap-2 ">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/YouTube_icon_%282013-2017%29.png/120px-YouTube_icon_%282013-2017%29.png"
+                alt="YouTube"
+                className="w-5 h-5"
+              />
+              <a
+                href="https://www.youtube.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white"
+              >
+                How to use
+              </a>
             </Button>
-          </div>
 
-          <div className="flex items-center gap-2 text-gray-400">
-            <div className="flex -space-x-2">
-              <div className="w-8 h-8 rounded-full bg-green-500 border-2 border-gray-900"></div>
-              <div className="w-8 h-8 rounded-full bg-gray-500 border-2 border-gray-900"></div>
-              <div className="w-8 h-8 rounded-full bg-blue-500 border-2 border-gray-900"></div>
-            </div>
-            <span>Trusted by 1,000+ developers</span>
+
+
+
           </div>
         </div>
 
+        {/* Right Section */}
         <div className="relative">
           <div className="bg-gray-800 rounded-lg shadow-xl p-6 max-w-md mx-auto">
             <div className="flex gap-2 mb-4">

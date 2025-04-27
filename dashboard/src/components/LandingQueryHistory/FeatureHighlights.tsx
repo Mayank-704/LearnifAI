@@ -1,6 +1,6 @@
 const FeatureHighlights = () => {
     return (
-      <div className="max-w-md space-y-4">
+      <div className="max-w-md space-y-4 ">
         <span className="inline-flex items-center px-3 py-1 rounded-full bg-green-900 text-green-300 text-sm font-medium">
           <span className="h-2 w-2 rounded-full bg-green-500 mr-2"></span>
           Built-in Dashboard

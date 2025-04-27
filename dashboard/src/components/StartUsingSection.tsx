@@ -3,7 +3,7 @@ import { FaGithub, FaTwitter } from "react-icons/fa";
 
 const StartUsingSection: React.FC = () => {
   const handleChromeClick = (): void => {
-    window.open("https://chrome.google.com/webstore/", "_blank");
+    window.open("https://www.youtube.com/", "_blank");
   };
 
   const handleGitHubClick = (): void => {

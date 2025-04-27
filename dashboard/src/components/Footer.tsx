@@ -12,7 +12,7 @@ const Footer: React.FC = () => {
 
         <div className="space-y-3">
           <div className="flex items-center cursor-pointer" onClick={scrollToTop}>
-            <div className="flex items-center justify-center bg-gray-800 pb-4 mr-4">
+            <div className="flex items-center justify-center pb-4 mr-4">
               <div className="flex items-center">
                 <Mic className="w-12 h-12 text-blue-400" />
                 <h1 className="text-sm font-bold text-blue-400">
