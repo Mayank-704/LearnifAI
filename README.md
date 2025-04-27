@@ -29,7 +29,7 @@ Whether it’s a confusing code snippet or dense documentation, LearnifAI simpli
 - **Backend (Optional)**: Node.js server to proxy API calls securely
 - **AI API**: Groq’s Language Model for fast contextual explanations
 - **Database**: MongoDB
-- **Voice Tools**: Web Speech Synthesis API
+- **Voice Tools**: Web Speech Synthesis API, Groq TTS Service
 
 **Sponsor Tech Used**:
 - ✅ **Groq** – Ultra-fast explanation generation  
@@ -41,10 +41,11 @@ Whether it’s a confusing code snippet or dense documentation, LearnifAI simpli
 ✅ *Speaks back to you:* AI talks back using chosen voice tone  
 ✅ *Query Dashboard:* View your past queries with timestamps  
 ✅ *Privacy-first:* Minimal permissions, anonymized queries  
+✅ *Multiple AI Models:* Select the model which suits best for your learning 
 
 ## 📽️ Demo & Deliverables
-**Demo Video**: [Paste YouTube link here]  
-**Pitch Deck / Slides**: [PDF link here]
+**Demo Video**: [[Paste YouTube link here]](https://youtu.be/OVA4UewnzHs)  
+**Pitch Deck / Slides**: [[PDF link here]](https://www.canva.com/design/DAGk-drvhoU/cz3rRf7OkNcc1c7UaT2Rnw/view?utm_content=DAGk-drvhoU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h130f6fe5aa)
 
 ## ✅ Tasks & Bonus Checklist
 - ✅ Followed required social channels  
