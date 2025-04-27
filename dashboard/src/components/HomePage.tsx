@@ -49,7 +49,7 @@ const HomePage: React.FC = () => {
                 className="w-5 h-5"
               />
               <a
-                href="https://www.youtube.com/"
+                href="https://www.youtube.com/watch?v=oswjtLwCUqg"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white"
