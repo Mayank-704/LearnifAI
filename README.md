@@ -44,24 +44,20 @@ Whether it’s a confusing code snippet or dense documentation, LearnifAI simpli
 ✅ *Multiple AI Models:* Select the model which suits best for your learning 
 
 ## 📽️ Demo & Deliverables
-**Demo Video**: [[Paste YouTube link here]](https://youtu.be/OVA4UewnzHs)  
-**Pitch Deck / Slides**: [[PDF link here]](https://www.canva.com/design/DAGk-drvhoU/cz3rRf7OkNcc1c7UaT2Rnw/view?utm_content=DAGk-drvhoU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h130f6fe5aa)
+**Demo Video**: [[https://youtu.be/OVA4UewnzHs]](https://youtu.be/OVA4UewnzHs)  
+**Pitch Deck / Slides**: [[https://www.canva.com/design/DAGk-drvhoU/cz3rRf7OkNcc1c7UaT2Rnw/view?utm_content=DAGk-drvhoU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h130f6fe5aa]](https://www.canva.com/design/DAGk-drvhoU/cz3rRf7OkNcc1c7UaT2Rnw/view?utm_content=DAGk-drvhoU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h130f6fe5aa)
 
 ## ✅ Tasks & Bonus Checklist
 - ✅ Followed required social channels  
 - ✅ Shared badges (Bonus Task 1)  
 - ✅ Registered on Sprint.dev (Bonus Task 2)
 
-# 📦 How to Install and Use a Chrome Extension from a ZIP File
-
-This guide explains how to manually install a Chrome extension from a ZIP file.
-
----
+# 📦 How to Install and Use Our Chrome Extension
 
 ## ✅ Steps
 
 ### 1. Download the Extension ZIP File
-Download the `.zip` file of the Chrome extension from a trusted website.
+Download the `.zip` file of the Chrome extension from our webiste [[LearnifAI]](https://learnifai-3.onrender.com/)
 
 ---
 
@@ -72,19 +68,17 @@ Unzip the downloaded file using your operating system's built-in tool or a third
 
 ---
 
-
 ### 3. Open the Chrome Extensions Page
 Open **Google Chrome**, then enter the following in the address bar:
 
+chrome://extensions/
 
 Press **Enter** to navigate to the Extensions management page.
-
 
 ---
 
 ### 4. Enable Developer Mode
 In the top-right corner of the Extensions page, toggle the **Developer mode** switch to **ON**.
-
 
 ---
 
@@ -98,17 +92,11 @@ Click the **Load unpacked** button and select the **folder** where you extracted
 ### 6. Use the Extension
 Once loaded, the extension icon should show up in Chrome's toolbar (top-right corner). Click it to use or manage its options.
 
-
----
-
-## 🔒 Note
-Only install extensions from trusted sources, especially when loading unpacked code, as it can access your browser data.
-
 ---
 
 Happy browsing! 🚀
 
 🏁 Final Words
-LearnifAI was born out of our frustration with hard-to-read docs and unclear error messages. We wanted an assistant that felt like a mentor — voice-first, fast, and easy to use — and that’s what we built!
+LearnifAI was born out of our frustration with hard-to-read docs and tabs switching for better answers. We wanted an assistant that felt like a mentor — voice-first, fast, and easy to use — and that’s what we built!
 Grateful for the learning, the laughs, and Groq’s blazing speed 🤖⚡
 
