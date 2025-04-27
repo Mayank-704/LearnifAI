@@ -30,7 +30,7 @@ try {
       token = cookie.value;
     } else {
       console.log("Didn't get cookie from user");
-      resultBox.innerHTML = '⚠️ Please sign up or log in on <a href="https://learnifai-3.onrender.com/" target="_blank">LearnifAI</a> to save your data.';
+      resultBox.innerHTML = '⚠️ Please sign up or log in on <a href="https://learnifai-3.onrender.com/history" target="_blank">LearnifAI</a> to save your data.';
       return;
     }
     // Now send the fetch request and manually attach the token
