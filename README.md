@@ -52,40 +52,63 @@ Whether it’s a confusing code snippet or dense documentation, LearnifAI simpli
 - ✅ Shared badges (Bonus Task 1)  
 - ✅ Registered on Sprint.dev (Bonus Task 2)
 
-## 🧪 How to Run the Project
-**Requirements**:
-- Chrome Browser
-- Groq API Key
+# 📦 How to Install and Use a Chrome Extension from a ZIP File
 
-**Local Setup**:
-```bash
-# Clone the repo
-git clone https://github.com/Mayank-704/LearnifAI
+This guide explains how to manually install a Chrome extension from a ZIP file.
 
-# Navigate to extension directory
-cd learnifAI
+---
 
-# Load extension into Chrome
-# 1. Open chrome://extensions
-# 2. Enable "Developer Mode"
-# 3. Click "Load unpacked" and select the `learnifai` folder
+## ✅ Steps
 
-🧬 Future Scope
-📈 Integration with dev platforms like GitHub, StackOverflow
-🧩 Custom prompt builder for deeper analysis
-🗣️ Add multilingual and regional voice options
-🛡️ Fully offline mode for privacy-focused users
-🎓 Student-friendly mode for simpler explanations
+### 1. Download the Extension ZIP File
+Download the `.zip` file of the Chrome extension from a trusted website.
 
-📎 Resources / Credits
-Groq API & docs
+---
 
-Web Speech API
+### 2. Extract the ZIP File
+Unzip the downloaded file using your operating system's built-in tool or a third-party extractor like WinRAR or 7-Zip.
 
-Chrome Extension Docs
+> 💡 Make sure the contents are extracted into a folder — this will be used in the next step.
 
-Inspiration: DevTools Copilot, ChatGPT Assistants
+---
+
+
+### 3. Open the Chrome Extensions Page
+Open **Google Chrome**, then enter the following in the address bar:
+
+
+Press **Enter** to navigate to the Extensions management page.
+
+
+---
+
+### 4. Enable Developer Mode
+In the top-right corner of the Extensions page, toggle the **Developer mode** switch to **ON**.
+
+
+---
+
+### 5. Load the Unpacked Extension
+Click the **Load unpacked** button and select the **folder** where you extracted the ZIP file.
+
+> ✅ The extension should now appear in your list of installed extensions.
+
+---
+
+### 6. Use the Extension
+Once loaded, the extension icon should show up in Chrome's toolbar (top-right corner). Click it to use or manage its options.
+
+
+---
+
+## 🔒 Note
+Only install extensions from trusted sources, especially when loading unpacked code, as it can access your browser data.
+
+---
+
+Happy browsing! 🚀
 
 🏁 Final Words
 LearnifAI was born out of our frustration with hard-to-read docs and unclear error messages. We wanted an assistant that felt like a mentor — voice-first, fast, and easy to use — and that’s what we built!
 Grateful for the learning, the laughs, and Groq’s blazing speed 🤖⚡
+
