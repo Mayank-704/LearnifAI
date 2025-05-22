@@ -67,7 +67,7 @@ toast.error(
   };
 
   return (
-    <div className="dark pt-12">
+    <div className="dark">
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900">
         <div className="w-full max-w-md p-8 space-y-6 bg-gray-800 rounded shadow-md">
           <h2 className="text-2xl font-bold text-center text-white">Sign Up</h2>
