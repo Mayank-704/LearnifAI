@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "./Button";
+import YoutubeEmbed from "./LandingFeatures/YouTubeEmbed";
 
 const HomePage: React.FC = () => {
   return (
@@ -66,7 +67,8 @@ const HomePage: React.FC = () => {
 
         {/* Right Section */}
         <div className="relative">
-          <div className="bg-gray-800 rounded-lg shadow-xl p-6 max-w-md mx-auto">
+          <YoutubeEmbed />
+          {/* <div className="bg-gray-800 rounded-lg shadow-xl p-6 max-w-md mx-auto">
             <div className="flex gap-2 mb-4">
               <div className="w-3 h-3 rounded-full bg-red-500"></div>
               <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
@@ -118,7 +120,7 @@ const HomePage: React.FC = () => {
                 This code first accepts an array called data. It processes each item in the array by applying a transform function to it. After transforming all items, it uses a filter function to remove any items that do not meet certain validation criteria. Finally, it returns a new array containing only the transformed items that passed the validation check. In short, it transforms and filters the original data to create a clean, valid output array.
               </p>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
