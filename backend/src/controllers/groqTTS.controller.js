@@ -8,10 +8,10 @@ export const generateGroqSpeech = async (req, res) => {
     const response = await axios.post(
       'https://api.groq.com/openai/v1/audio/speech',
       {
-        model: 'playai-tts', // or 'playai-tts-arabic'
+        model: 'canopylabs/orpheus-v1-english', // or 'playai-tts-arabic'
         input: text,
-        voice: 'Aaliyah-PlayAI', 
-        response_format: 'mp3',
+        voice: 'hannah', 
+        response_format: 'wav',
       },
       {
         headers: {
@@ -24,7 +24,7 @@ export const generateGroqSpeech = async (req, res) => {
 
     res.set({
       'Content-Type': 'audio/mpeg',
-      'Content-Disposition': 'inline; filename="groq-tts.mp3"',
+      'Content-Disposition': 'inline; filename="groq-tts.wav"',
     });
 
     res.send(response.data);
