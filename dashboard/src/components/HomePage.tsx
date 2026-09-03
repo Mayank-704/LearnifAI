@@ -15,13 +15,13 @@ const HomePage: React.FC = () => {
             Voice-Powered Doc Buddy
           </div>
 
-          <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-gray-100">
-            Understand Code with Your <span className="text-blue-400">Voice</span>
+          <h1 className="text-5xl font-bold tracking-tight text-gray-100">
+            Understand  <span className="text-blue-400"> Anything </span> with Your <span className="text-blue-400">Voice</span>
           </h1>
 
           <p className="text-xl text-gray-400">
             A Chrome extension that helps developers understand anything on their screen with voice commands. Select,
-            speak, and get instant explanations using Groq's LLM.
+            speak, and get instant explanation.
           </p>
 
           {/* Note Section */}
