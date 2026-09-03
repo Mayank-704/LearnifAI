@@ -29,7 +29,7 @@ const History = () => {
 
     try {
       setLoading(true);
-      const response = await fetch('https://learnifai-1.onrender.com/api/history/gethistory', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/history/gethistory`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ const History = () => {
     }
 
     try {
-      const response = await fetch(`https://learnifai-1.onrender.com/api/history/delete/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/history/delete/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

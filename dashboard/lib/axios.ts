@@ -3,7 +3,7 @@ import Cookies from "js-cookie"
 
 const token = Cookies.get("token");
 
-const baseURL = "https://learnifai-1.onrender.com/api";
+const baseURL = import.meta.env.VITE_API_URL;
 
 export const axiosInstance: AxiosInstance = axios.create({
     baseURL,
